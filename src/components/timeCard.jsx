@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/src/components/ui/card";
 import React, { Component } from 'react'
 
-export default class timeCard extends Component {
+export default class TimeCard extends Component {
   render() {
     const { title, chipColor, diceScale } = this.props;
     return (
