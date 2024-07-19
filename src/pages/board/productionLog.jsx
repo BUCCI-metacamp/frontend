@@ -52,7 +52,7 @@ export function ProductionLog() {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="제목">제목</SelectItem>
+                <SelectItem value="{}">제목</SelectItem>
                 <SelectItem value="작성자">작성자</SelectItem>
                 <SelectItem value="내용">내용</SelectItem>
               </SelectGroup>

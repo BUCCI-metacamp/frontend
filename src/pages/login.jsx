@@ -4,8 +4,51 @@ import { Label } from "@components/ui/label"
 
 import { Link } from "react-router-dom"
 
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { setIsLogin } = useAuth(); // setIsLogin 함수를 AuthContext에서 가져옵니다.
+  const navigate = useNavigate();
 
-export function Login() {
+  const validateInputs = () => {
+    if (email === '' || password === '') {
+      return false;
+    }
+    return true;
+  }
+
+  const submitClick = async (e) => {
+    e.preventDefault(); // 기본 동작 방지
+
+    if (!validateInputs()) {
+      return;
+    }
+
+    const data = {
+      userID: email,
+      password: password,
+    };
+
+    try {
+      const result = await postLogin(data);
+      if(result.success == true){
+        setIsLogin(true); // 로그인 성공 시 상태 업데이트
+        then(() => {
+            navigate('/');
+        });
+    }
+    else{
+        setIsLogin(false); // 로그인 실패 시 상태 업데이트
+        then(() => {
+            navigate('/');
+        });s
+    }
+    
+    } catch (error) {
+      Swal.fire('Error', '아이디와 비밀번호를 확인해주세요', 'error');
+    }
+  }
+
   return (
     <div className="w-full h-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
@@ -15,31 +58,30 @@ export function Login() {
           </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">아이디</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="m@example.com"
                 required
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
               />
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                <Link
-                  href="/forgot-password"
-                  className="ml-auto inline-block text-sm underline"
-                >
-                  Forgot your password?
-                </Link>
+                <Label htmlFor="password">비밀번호</Label>
               </div>
-              <Input id="password" type="password" required />
+              <Input 
+              id="password" 
+              type="password" 
+              required 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              />
             </div>
-            <Button type="submit" className="w-full bg-primary">
-              Login
-            </Button>
-            <Button variant="outline" className="w-full">
-              Login with Google
+            <Button type="submit" className="w-full bg-primary" onClick={submitClick}>
+              로그인
             </Button>
           </div>
         </div>
@@ -56,3 +98,5 @@ export function Login() {
     </div>
   )
 }
+
+export default Login;
