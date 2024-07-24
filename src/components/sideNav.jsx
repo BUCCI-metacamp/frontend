@@ -28,7 +28,7 @@ export const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/pages/dashboard"
+                to="/dashboard"
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <TableProperties className="h-5 w-5" />
@@ -40,7 +40,7 @@ export const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/pages/product"
+                to="/product"
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <LineChartIcon className="h-5 w-5" />
@@ -52,7 +52,7 @@ export const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/pages/productionLog"
+                to="/board/productionLog"
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <NotebookIcon className="h-5 w-5" />
@@ -64,7 +64,7 @@ export const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/pages/generateUser"
+                to="/generateUser"
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <UserCircle2 className="h-5 w-5" />

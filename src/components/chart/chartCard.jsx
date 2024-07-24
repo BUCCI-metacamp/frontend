@@ -15,31 +15,29 @@ class ChartCard extends Component {
             <CardDescription>{description}</CardDescription>
           </CardHeader>
           <CardContent>
-            <div>
               <div className="flex justify-between">
                 <div className="flex flex-col justify-center">
                   <input type="checkbox" />
                   <div>
-                    동작 중
+                    동작
                   </div>
                 </div>
                 <div className="flex flex-col justify-center">
                   <input type="checkbox" />
                   <div>
-                    전진 완료
+                    전진
                   </div>
                 </div>
                 <div className="flex flex-col justify-center">
                   <input type="checkbox" />
                   <div>
-                    후진 완료
+                    후진
                   </div>
                 </div>
               </div>
-            </div>
           </CardContent>
           <CardFooter>
-            <ChartContainer config={chartConfig} className="min-h-[100px] w-full">
+            <ChartContainer config={chartConfig} className="max-h-[100px] w-full">
               <AreaChart accessibilityLayer data={chartData}>
                 <XAxis
                   dataKey="time"

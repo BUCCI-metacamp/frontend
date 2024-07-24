@@ -1,14 +1,38 @@
+import { useState } from "react"
+import { useAuth } from '../context/AuthContext'; // AuthContext를 import 합니다.
+
+
 import { Button } from "@components/ui/button"
 import { Input } from "@components/ui/input"
 import { Label } from "@components/ui/label"
 
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export function Login() {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
   const { setIsLogin } = useAuth(); // setIsLogin 함수를 AuthContext에서 가져옵니다.
   const navigate = useNavigate();
+
+
+  const handleChange = (e) => {
+    const newFormData = e.target.value;
+    setFormData(newFormData)
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('auth/login', formData);
+      console.log('Login successful:', response.data);
+      // 로그인 성공 시 처리 (예: 토큰 저장, 페이지 이동 등)
+    } catch (error) {
+      console.error('There was an error logging in:', error);
+    }
+  };
 
   const validateInputs = () => {
     if (email === '' || password === '') {
@@ -45,11 +69,11 @@ const Login = () => {
     }
     
     } catch (error) {
-      Swal.fire('Error', '아이디와 비밀번호를 확인해주세요', 'error');
     }
   }
 
   return (
+    <form onSubmit={handleSubmit}>
     <div className="w-full h-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
@@ -64,8 +88,8 @@ const Login = () => {
                 type="email"
                 placeholder="m@example.com"
                 required
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
             <div className="grid gap-2">
@@ -76,8 +100,8 @@ const Login = () => {
               id="password" 
               type="password" 
               required 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
+              value={formData.password} 
+              onChange={handleChange}
               />
             </div>
             <Button type="submit" className="w-full bg-primary" onClick={submitClick}>
@@ -96,7 +120,6 @@ const Login = () => {
         />
       </div>
     </div>
+    </form>
   )
 }
-
-export default Login;

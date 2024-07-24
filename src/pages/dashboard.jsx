@@ -17,11 +17,11 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/src/components/ui/chart"
 // import { SideNav } from "../components/nav/sideNav"
 
-import OnTime from "../components/onTime"
 import ChartCard from "@/src/components/chart/chartCard"
 import TimeCard from "@/src/components/timeCard"
 import UnitCard from "@/src/components/unitCard/unitCard"
 import { SideNav } from "../components/sideNav"
+import Header from "../components/header"
 
 
 const ChartData = [
@@ -53,36 +53,10 @@ export function Dashboard() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
       <SideNav />
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-        <header className="sticky top-0 z-30 flex h-14 items-center justify-end gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-          <p>가동 시간 00:00</p>
-          <p>현재 시간 00:00</p>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="overflow-hidden rounded-full"
-              >
-                <img
-                  src="/placeholder-user.jpg"
-                  alt="Avatar"
-                  className="overflow-hidden rounded-full"
-                />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </header>
-        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-          <Card className="p-4 bg-slate-100">
+      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14  max-w-[1280px]">
+        <Header/>
+        <main className="grid flex-1 items-start gap-4 sm:px-6 sm:py-0 md:gap-8">
+          <Card className="p-6 bg-slate-100">
             <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
               <div>
                 <TimeCard

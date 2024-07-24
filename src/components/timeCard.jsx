@@ -11,7 +11,7 @@ export default class TimeCard extends Component {
       </CardHeader>
       <CardContent>
           <div>
-            <p>칩 색깔 : </p><p>{chipColor}</p>
+            <p>칩 색상 : </p><p>{chipColor}</p>
           </div>
           <div>
             <p>주사위 눈 : </p><p>{diceScale}</p>

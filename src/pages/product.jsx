@@ -3,6 +3,7 @@ import { Card, CardTitle, CardHeader } from "@/src/components/ui/card"
 
 import ProductChartCard from "@components/chart/productChartCard"
 import { SideNav } from "../components/sideNav"
+import Header from "../components/header";
 
 
 const ChartData = [
@@ -50,9 +51,10 @@ export function Product() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
       <SideNav />
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14  max-w-[1280px]">
+        <Header/>
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-          <Card className="p-4 bg-slate-100">
+          <Card className="p-6 bg-slate-100">
           <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
             <div className="grid grid-cols-4 grid-rows-4 gap-5">
               <Card className="p-5">
