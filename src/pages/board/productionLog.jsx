@@ -9,98 +9,81 @@ import {
   TableHeader,
   TableRow,
 } from "@components/ui/table"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  SelectGroup,
-} from "@components/ui/select"
-import { Input } from "@components/ui/input"
 import Header from '@/src/components/header'
 import { Card, CardContent } from '@/src/components/ui/card'
 
-// import {} from ''
+import { createPost, getPosts, updatePost, deletePost} from '@/src/apis/boardApi/board'
+import Search from '@/src/components/chart/search'
+
+  export function ProductionLog() {
+  const [posts, setPosts] = useState([]);
+  const [allPosts, setAllPosts] = useState([]); // 모든 게시물을 저장하기 위한 상태
+  // const [searchType, setSearchType] = useState('title');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [loginUser, setLoginUser] = useState(''); // 로그인 체크 상태
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await getPosts();
+      setLoginUser(response.data.user.userId);
+      setPosts(response.data.result);
+      setAllPosts(response.data.result); // 모든 게시물을 저장
+    } catch (error) {
+      console.error('Error fetching posts', error);
+    }
+  };
+
+  
+// const posts = [
+//   {
+//     number: "1",
+//     title: "React Hooks",
+//     author: "John Doe",
+//     date: "2022-01-01",
+//   },
+//   {
+//     number: "2",
+//     title: "React Hooks",
+//     author: "John Doe",
+//     date: "2022-01-01",
+//   },
+//   {
+//     number: "3",
+//     title: "React Hooks",
+//     author: "John Doe",
+//     date: "2022-01-01",
+//   },
+//   {
+//     number: "4",
+//     title: "React Hooks",
+//     author: "John Doe",
+//     date: "2022-01-01",
+//   },
+//   {
+//     number: "5",
+//     title: "React Hooks",
+//     author: "John Doe",
+//     date: "2022-01-01",
+//   },
+//   {
+//     number: "6",
+//     title: "React Hooks",
+//     author: "John Doe",
+//     date: "2022-01-01",
+//   },
+//   {
+//     number: "7",
+//     title: "React Hooks",
+//     author: "John Doe",
+//     date: "2022-01-01",
+//   }
+// ]
 
 
-  // const [posts, setPosts] = useState([]);
-
-  // useEffect(() => {
-  //   axios.get('http://localhost:5000/reports')
-  //     .then(response => {
-  //       setPosts(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.error("There was an error fetching the posts!", error);
-  //     });
-  // }, []);
-
-  // const handleSearch = () => {
-  //   if (searchQuery.trim() === '') {
-  //     setPosts(allPosts); // 검색어가 없으면 모든 게시물을 표시
-  //   } else {
-  //     const filteredPosts = allPosts.filter(post => {
-  //       if (searchType === 'title') {
-  //         return post.title.includes(searchQuery);
-  //       } else if (searchType === 'content') {
-  //         return post.content.includes(searchQuery);
-  //       } else if (searchType === 'author') {
-  //         return post.name.includes(searchQuery);
-  //       }
-  //       return false;
-  //     });
-  //     setPosts(filteredPosts);
-  //   }
-  // };
-
-
-const posts = [
-  {
-    number: "1",
-    title: "React Hooks",
-    author: "John Doe",
-    date: "2022-01-01",
-  },
-  {
-    number: "2",
-    title: "React Hooks",
-    author: "John Doe",
-    date: "2022-01-01",
-  },
-  {
-    number: "3",
-    title: "React Hooks",
-    author: "John Doe",
-    date: "2022-01-01",
-  },
-  {
-    number: "4",
-    title: "React Hooks",
-    author: "John Doe",
-    date: "2022-01-01",
-  },
-  {
-    number: "5",
-    title: "React Hooks",
-    author: "John Doe",
-    date: "2022-01-01",
-  },
-  {
-    number: "6",
-    title: "React Hooks",
-    author: "John Doe",
-    date: "2022-01-01",
-  },
-  {
-    number: "7",
-    title: "React Hooks",
-    author: "John Doe",
-    date: "2022-01-01",
-  }
-]
-
-export function ProductionLog() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
       <SideNav/>
@@ -114,25 +97,14 @@ export function ProductionLog() {
               <Button variant="destructive">
                 <a href='./write'>글쓰기</a>
               </Button>
-              <div className="flex justify-center gap-4">
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="제목" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="{}">제목</SelectItem>
-                    <SelectItem value="작성자">작성자</SelectItem>
-                    <SelectItem value="내용">내용</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-                <Input
-                  type="text"
-                  placeholder="검색어를 입력하세요"
-                />
-                <Button>검색</Button>
-              </div>
+              <Search
+                opt1="title"
+                opt2="content"
+                opt3="author"
+                select1="제목"
+                select2="내용"
+                select3="작성자"
+              />  
             </div>
             <Card>
               <div className='h-100'>
@@ -149,7 +121,7 @@ export function ProductionLog() {
                   {posts.map((post) => (
                   <TableRow>
                     <TableCell className="text-center">{post.number}</TableCell>
-                    <TableCell className="text-center">{post.title}</TableCell>
+                    <TableCell className="text-center max-w-52">{post.title}</TableCell>
                     <TableCell className="text-center">{post.author}</TableCell>
                     <TableCell className="text-center">{post.date}</TableCell>
                   </TableRow>

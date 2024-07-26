@@ -1,23 +1,12 @@
-import { Link } from "react-router-dom"
-import { ChevronLeft, ChevronRight, CirclePlus, Copy, CreditCard, Dice1, File, Home, LineChart, ListFilter, MoreVertical, Package, Package2, PanelLeft, Pencil, Search, Settings, ShoppingCart, TableProperties, Truck, Users2, } from "lucide-react"
+import { useState } from "react"
 
-import { Badge } from "@/src/components/ui/badge"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/src/components/ui/breadcrumb"
+import { Dice1, ListFilter } from "lucide-react"
 import { Button } from "@/src/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/src/components/ui/card"
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/src/components/ui/dropdown-menu"
-import { Input } from "@/src/components/ui/input"
-import { Pagination, PaginationContent, PaginationItem, } from "@/src/components/ui/pagination"
-import { Progress } from "@/src/components/ui/progress"
-import { Separator } from "@/src/components/ui/separator"
-import { Sheet, SheetContent, SheetTrigger } from "@/src/components/ui/sheet"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/src/components/ui/table"
+import { Card } from "@/src/components/ui/card"
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/src/components/ui/dropdown-menu"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "@/src/components/ui/tabs"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/src/components/ui/chart"
-// import { SideNav } from "../components/nav/sideNav"
 
-import ChartCard from "@/src/components/chart/chartCard"
+import ChartCard from "@/src/components/chart/chartCardWs"
 import TimeCard from "@/src/components/timeCard"
 import UnitCard from "@/src/components/unitCard/unitCard"
 import { SideNav } from "../components/sideNav"
@@ -50,6 +39,17 @@ const DiceScale = () => {
 };
 
 export function Dashboard() {
+  const [token, setToken] = useState('');
+  const [roomName, setRoomName] = useState('');
+  const [showChart, setShowChart] = useState(false);
+
+  const handleConnect = () => {
+    if (token && roomName) {
+      setShowChart(true);
+    } else {
+      alert('Token과 Room Name을 모두 입력해주세요.');
+    }
+  };
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
       <SideNav />
@@ -58,6 +58,21 @@ export function Dashboard() {
         <main className="grid flex-1 items-start gap-4 sm:px-6 sm:py-0 md:gap-8">
           <Card className="p-6 bg-slate-100">
             <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
+              <div className="flex gap-4">
+                <input 
+                  type="text" 
+                  value={token} 
+                  onChange={(e) => setToken(e.target.value)} 
+                  placeholder="Enter token"
+                />
+                <input 
+                  type="text" 
+                  value={roomName} 
+                  onChange={(e) => setRoomName(e.target.value)} 
+                  placeholder="Enter room name"
+                />
+                <button onClick={handleConnect} disabled={showChart}>연결</button>
+              </div>
               <div>
                 <TimeCard
                       title="현 공정 소재 상태"
@@ -67,24 +82,32 @@ export function Dashboard() {
               </div>
               <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <ChartCard
+                  token={token}
+                  roomName={roomName}
                   chartData={ChartData}
                   chartConfig={ChartConfig}
                   title="반출 공정"
                   description="푸셔 기동 상태"
                 />
                 <ChartCard
+                  token={token}
+                  roomName={roomName}
                   chartData={ChartData}
                   chartConfig={ChartConfig}
                   title="가공 공정"
                   description="푸셔 기동 상태"
                 />
                 <ChartCard
+                  token={token}
+                  roomName={roomName}
                   chartData={ChartData}
                   chartConfig={ChartConfig}
                   title="분류 공정"
                   description="1축 기동 상태"
                 />
                 <ChartCard
+                  token={token}
+                  roomName={roomName}
                   chartData={ChartData}
                   chartConfig={ChartConfig}
                   title="분류 공정"

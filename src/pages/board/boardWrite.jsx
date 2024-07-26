@@ -12,19 +12,19 @@ import React, { Component } from 'react'
 export default class BoardWrite extends Component {
   render() {
     return (
-      <div className="flex min-h-screen w-full flex-col bg-muted/40">
+      <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
         <SideNav/>
         <div className="flex flex-col sm:py-4 sm:pl-14 mx-12 max-w-[1280px]">
           <Header/>
           <h2 className='text-2xl text-red-400 font-bold mt-8'>일지 작성</h2>
-          <Card className="mt-6">
+          <Card className="mt-6 bg-slate-100">
             <CardHeader>
               <p className='text-base font-bold'>제목</p>
               <CardDescription>오늘의 일지</CardDescription>
-              <Input/>
+              <Input maxlength='100'/>
             </CardHeader>
           </Card>
-          <Card className="mt-3">
+          <Card className="mt-3 bg-slate-100">
             <CardHeader>
               <p className='text-base font-bold'>내용</p>
               <CardDescription>생산량, 재고, 특이사항 등</CardDescription>

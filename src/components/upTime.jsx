@@ -33,7 +33,7 @@ const UpTime = () => {
     const fetchStartTime = async () => {
       try {
         const response = await fetch('/dashboard/uptime');
-        const data = await response.json();
+        const data = await response.json;
         setStartTime(data.time);
         setLoading(false);
       } catch (error) {
