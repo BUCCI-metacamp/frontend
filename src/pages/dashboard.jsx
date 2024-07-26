@@ -1,4 +1,5 @@
-import { useState } from "react"
+import React, { useState, useEffect } from "react"
+import io from 'socket.io-client';
 
 import { Dice1, ListFilter } from "lucide-react"
 import { Button } from "@/src/components/ui/button"
@@ -11,16 +12,38 @@ import TimeCard from "@/src/components/timeCard"
 import UnitCard from "@/src/components/unitCard/unitCard"
 import { SideNav } from "../components/sideNav"
 import Header from "../components/header"
+// import WebSocketChart from "../components/chart/WebsocketChart";
+
+  // class dashboard extends Component {
+  
+  // componentWillUnmount() {
+  //   const { socket } = this.state;
+  //   if (socket) {
+  //     socket.disconnect();
+  //   }
+  // }
+
+//   updateGraphData = (receivedData, roomName) => {
+//     let updatedData = [];
+//     if (roomName === 'edukit') {
+//       updatedData = receivedData.map(item => ({
+//         time: item.timestamp,
+//         value: item.value
+//       }));
+//     } else if (roomName === 'production') {
+//       updatedData = receivedData.map(item => ({
+//         time: item.timestamp,
+//         pass: item.passCount,
+//         fail: item.failCount
+//       }));
+//     }
+//     this.setState({ data: updatedData });
+//   };
+// }
 
 
-const ChartData = [
-  { time: "1", desktop: 100 },
-  { time: "2", desktop: 0 },
-  { time: "3", desktop: 100 },
-  { time: "4", desktop: 100 },
-  { time: "5", desktop: 0 },
-  { time: "6", desktop: 100 },
-];
+
+
 
 const ChartConfig = {
   desktop: {
@@ -28,6 +51,8 @@ const ChartConfig = {
     color: "#cc527a",
   }
 };
+
+
 
 const ChipColor = () => {
   console.log('Create New Order clicked');
@@ -39,17 +64,81 @@ const DiceScale = () => {
 };
 
 export function Dashboard() {
+  
   const [token, setToken] = useState('');
   const [roomName, setRoomName] = useState('');
   const [showChart, setShowChart] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
+  const [data, setData] = useState([]);
+  let b2i;
+  const [chartData, setChartData] = useState({
+    labels: [],
+    values: []
+  })
 
-  const handleConnect = () => {
-    if (token && roomName) {
-      setShowChart(true);
-    } else {
-      alert('Token과 Room Name을 모두 입력해주세요.');
-    }
+  const ConnectSocket = ({ isConnected, setIsConnected }) => {
+    useEffect(() => {
+      const roomName = "edukit";
+      const token = localStorage.getItem("token");
+      const newSocket = io('http://158.247.241.162:3001', {
+        withCredentials: false,
+        query: { token },
+      });
+  
+      newSocket.on('connect', () => {
+        console.log('Connected to server');
+        setIsConnected(true);
+        newSocket.emit('request_join_room', roomName);
+      });
+  
+      const eventName = roomName === 'edukit' ? 'edukit_data' : 'production_data';
+  
+      newSocket.on(eventName, (receivedData) => {
+        // console.log('Received data:', receivedData);
+        setData(receivedData);
+        console.log("datatatata", data[1].value)
+        updateChartData(data);
+        // if(data[1].value == false){
+        //   b2i = 0
+        // } else {
+        //   b2i = 100
+        // }
+        // console.log(b2i)
+        // return b2i;
+        // 여기서 receivedData를 처리하는 로직을 추가할 수 있습니다.
+      });
+  
+      // 컴포넌트가 언마운트될 때 소켓 연결을 닫습니다.
+      return () => {
+        newSocket.close();
+      };
+    }, []); // 빈 배열은 이 효과가 컴포넌트 마운트 시 한 번만 실행됨을 의미합니다.
+  
+    return (
+      <div>
+        {isConnected ? "연결됨" : "연결되지 않음"}
+      </div>
+    );
   };
+
+  // const ChartData = [
+  //   { time: "1", desktop: b2i },
+  //   { time: "2", desktop: b2i },
+  //   { time: "3", desktop: b2i },
+  //   { time: "4", desktop: b2i },
+  //   { time: "5", desktop: b2i },
+  //   { time: "6", desktop: b2i },
+  // ];
+  const updateChartData = (data) => {
+    const labels = data.map(item => item.name);
+    const values = data.map(item => item.value);
+
+    setChartData({
+        labels: labels,
+        values: values
+    });
+};
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
       <SideNav />
@@ -59,19 +148,19 @@ export function Dashboard() {
           <Card className="p-6 bg-slate-100">
             <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
               <div className="flex gap-4">
-                <input 
-                  type="text" 
-                  value={token} 
-                  onChange={(e) => setToken(e.target.value)} 
-                  placeholder="Enter token"
-                />
-                <input 
-                  type="text" 
-                  value={roomName} 
-                  onChange={(e) => setRoomName(e.target.value)} 
-                  placeholder="Enter room name"
-                />
-                <button onClick={handleConnect} disabled={showChart}>연결</button>
+                <ConnectSocket isConnected={isConnected} setIsConnected={setIsConnected} />
+                <button onClick={() => setIsConnected(true)}>연결</button>
+              </div>
+              <div className="bg-slate-300 h-fit">
+                <ul>
+                {data && data.length > 0 ? (
+                  data.map((item) => (
+                    <li key={item.tagId}>{item.name} ({item.tagId}) ({item.value.toString()})</li>
+                  ))
+                ) : (
+                  <li>No data available</li>
+                )}
+                </ul>
               </div>
               <div>
                 <TimeCard
@@ -81,10 +170,9 @@ export function Dashboard() {
                 />
               </div>
               <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                {/* <WebSocketChart/> */}
                 <ChartCard
-                  token={token}
-                  roomName={roomName}
-                  chartData={ChartData}
+                  chartData={chartData}
                   chartConfig={ChartConfig}
                   title="반출 공정"
                   description="푸셔 기동 상태"
@@ -92,7 +180,7 @@ export function Dashboard() {
                 <ChartCard
                   token={token}
                   roomName={roomName}
-                  chartData={ChartData}
+                  chartData={chartData}
                   chartConfig={ChartConfig}
                   title="가공 공정"
                   description="푸셔 기동 상태"
@@ -100,7 +188,7 @@ export function Dashboard() {
                 <ChartCard
                   token={token}
                   roomName={roomName}
-                  chartData={ChartData}
+                  chartData={chartData}
                   chartConfig={ChartConfig}
                   title="분류 공정"
                   description="1축 기동 상태"
@@ -108,7 +196,7 @@ export function Dashboard() {
                 <ChartCard
                   token={token}
                   roomName={roomName}
-                  chartData={ChartData}
+                  chartData={chartData}
                   chartConfig={ChartConfig}
                   title="분류 공정"
                   description="2축 기동 상태"

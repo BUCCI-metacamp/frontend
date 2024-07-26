@@ -1,67 +1,19 @@
 // src/components/chart/chartCard.jsx
 import React, { Component } from 'react';
-import io from 'socket.io-client';
 import { Area, AreaChart, XAxis } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/src/components/ui/chart";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/src/components/ui/card";
 
 class ChartCard extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       data: [],
-      isConnected: false,
+      isConnected: true,
       socket: null
     };
   }
-
-  componentDidMount() {
-    const { roomName } = this.props;
-    if (roomName) {
-      const newSocket = io('http://192.168.0.64:3001', {
-        withCredentials: true
-      });
-
-      newSocket.on('connect', () => {
-        console.log('Connected to server');
-        this.setState({ isConnected: true });
-        newSocket.emit('request_join_room', roomName);
-      });
-
-      const eventName = roomName === 'edukit' ? 'edukit_data' : 'production_data';
-
-      newSocket.on(eventName, (receivedData) => {
-        console.log('Received data:', receivedData);
-        this.updateGraphData(receivedData, roomName);
-      });
-
-      this.setState({ socket: newSocket });
-    }
-  }
-
-  componentWillUnmount() {
-    const { socket } = this.state;
-    if (socket) {
-      socket.disconnect();
-    }
-  }
-
-  updateGraphData = (receivedData, roomName) => {
-    let updatedData = [];
-    if (roomName === 'edukit') {
-      updatedData = receivedData.map(item => ({
-        time: item.timestamp,
-        value: item.value
-      }));
-    } else if (roomName === 'production') {
-      updatedData = receivedData.map(item => ({
-        time: item.timestamp,
-        pass: item.passCount,
-        fail: item.failCount
-      }));
-    }
-    this.setState({ data: updatedData });
-  };
 
   render() {
     const { title, description, chartConfig } = this.props;
