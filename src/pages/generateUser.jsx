@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react'
 import { Link } from "react-router-dom"
-import { postIdCheck } from "@/src/apis/userApi/user.js"
+import { postIdCheck, postSignup } from "@/src/apis/userApi/user.js"
 
 import axios from 'axios'
 
@@ -19,6 +19,7 @@ import {
 import { SideNav } from '@/src/components/sideNav'
 import { Card, CardContent } from '../components/ui/card'
 import Header from '@/src/components/header'
+import Search from '@/src/components/chart/search'
 
 export function GenerateUser() {
 
@@ -43,9 +44,21 @@ export function GenerateUser() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!duplicateIdCheck()){
+      alert("중복된 id가 존재합니다.");
+      return;
+    }
+    const data = {
+      userId: formData.email,
+      password: formData.password,
+      user: formData.user,
+      role: formData.role,
+    }
     try {
-      const response = await axios.post('/auth/signup', formData);
-      console.log('Signup successful:', response.data);
+      const response = await postSignup(data);
+      if(response.result === "success"){
+        alert("계정생성에 성공했습니다.");
+      }
     } catch (error) {
       console.error('There was an error signing up:', error);
     }
@@ -53,7 +66,7 @@ export function GenerateUser() {
 
   const duplicateIdCheck = async () => {
     const data = {
-        userID: document.getElementById('email').value.trim()
+        userId: document.getElementById('email').value.trim()
     }
     const result = await postIdCheck(data);
     console.log("🚀 ~ duplicateIDCheck ~ result:", result)
@@ -122,9 +135,9 @@ export function GenerateUser() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="user">User</SelectItem>
-                      <SelectItem value="moderator">Moderator</SelectItem>
-                      <SelectItem value="shyachyo">Shyachyo</SelectItem>
+                      <SelectItem value="1">1</SelectItem>
+                      <SelectItem value="2">2</SelectItem>
+                      <SelectItem value="3">3</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -135,15 +148,23 @@ export function GenerateUser() {
             </Button>
           </div>
           </CardContent>
-          <div className='flex flex-col gap-8'>
-          <h2 className="text-left text-red-600 font-bold text-2xl mt-6">유저 목록</h2>
-          <Card className="grid grid-cols-2 row-start-2 col-start-2 h-2/3 mr-8 px-4 py-4 gap-4">
-            <Card className="h-[80px]">
-              <CardContent>
-                <p>유저1</p>
-              </CardContent>
+          <div className='flex flex-col gap-4 mr-8 mt-6'>
+            <h2 className="text-left text-red-600 font-bold text-2xl">유저 목록</h2>
+            <Search
+              opt1="name"
+              opt2="userId"
+              opt3="role"
+              select1="이름"
+              select2="아이디"
+              select3="권한"
+            /> 
+            <Card className="grid grid-cols-2 row-start-2 col-start-2 h-2/3 px-4 py-4 gap-4">
+              <Card className="h-[80px]">
+                <CardContent>
+                  <p>유저1</p>
+                </CardContent>
+              </Card>
             </Card>
-          </Card>
           </div>
           </Card>
         </div>

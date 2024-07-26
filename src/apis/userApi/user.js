@@ -13,7 +13,6 @@ export const postSignup = async (data) => {
 export const postLogin = async (data) => {
   try {
     const response = await axiosInstance.post('/auth/login', data);
-    console.log("🚀 ~ postLogin ~ response:", response)
     return response.data;
   } catch (error) {
     console.error('Error during login:', error.response?.data || error.message);
@@ -24,7 +23,7 @@ export const postLogin = async (data) => {
 export const postIdCheck = async (data) => {
   console.log("🚀 ~ postLogin ~ data:", data)
   try {
-    const response = await axiosInstance.post('/auth/duplicate-check', data);
+const response = await axiosInstance.get('/auth/duplicate-check', { params: data });
     return response.data;
   } catch (error) {
     console.error('Error during login:', error.response?.data || error.message);
@@ -43,15 +42,15 @@ export const postEmailCheck = async (data) => {
   }
 };
 
-export const postLoginCheck = async () => {
-  try {
-    const response = await axiosInstance.get('/auth/loginCheck');
-    return response.data;
-  } catch (error) {
-    console.error('Error during login:', error.response?.data || error.message);
-    throw error;
-  }
-};
+// export const postLoginCheck = async () => {
+//   try {
+//     const response = await axiosInstance.get('/auth/loginCheck');
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error during login:', error.response?.data || error.message);
+//     throw error;
+//   }
+// };
 
 ////관리자 권한
 export const getAllUsers = async () => {

@@ -8,30 +8,24 @@ import { Label } from "@components/ui/label"
 
 import { Link, useNavigate } from "react-router-dom"
 
+import { postLogin } from "@/src/apis/userApi/user"
+
 export function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
-  const { setIsLogin } = useAuth(); // setIsLogin 함수를 AuthContext에서 가져옵니다.
+  // const { setIsLogin } = useAuth();
   const navigate = useNavigate();
 
 
   const handleChange = (e) => {
-    const newFormData = e.target.value;
-    setFormData(newFormData)
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('auth/login', formData);
-      console.log('Login successful:', response.data);
-      // 로그인 성공 시 처리 (예: 토큰 저장, 페이지 이동 등)
-    } catch (error) {
-      console.error('There was an error logging in:', error);
-    }
+    const { id, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [id]: value 
+    }));
   };
 
   const validateInputs = () => {
@@ -49,23 +43,26 @@ export function Login() {
     }
 
     const data = {
-      userID: email,
-      password: password,
+      userId: formData.email,
+      password: formData.password,
     };
 
     try {
-      const result = await postLogin(data);
-      if(result.success == true){
-        setIsLogin(true); // 로그인 성공 시 상태 업데이트
+      const result = await postLogin(data); 
+      console.log("🚀 ~ submitClick ~ result:", result)
+      if(result){
+        // setIsLogin(true); // 로그인 성공 시 상태 업데이트
+        console.log("login successful")
         then(() => {
-            navigate('/');
+            navigate('/dashboard');
         });
     }
     else{
-        setIsLogin(false); // 로그인 실패 시 상태 업데이트
+        // setIsLogin(false); // 로그인 실패 시 상태 업데이트
+        console.log("login failed")
         then(() => {
             navigate('/');
-        });s
+        });
     }
     
     } catch (error) {
@@ -73,7 +70,7 @@ export function Login() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
     <div className="w-full h-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
