@@ -52,13 +52,14 @@ export function Login() {
       console.log("🚀 ~ submitClick ~ result:", result)
       if(result){
         // setIsLogin(true); // 로그인 성공 시 상태 업데이트
+        localStorage.setItem("token", result.token);
         console.log("login successful")
         then(() => {
             navigate('/dashboard');
         });
     }
     else{
-        // setIsLogin(false); // 로그인 실패 시 상태 업데이트
+        setIsLogin(false); // 로그인 실패 시 상태 업데이트
         console.log("login failed")
         then(() => {
             navigate('/');
