@@ -1,5 +1,7 @@
-import { Card, CardTitle, CardHeader } from "@/src/components/ui/card"
+import useSocket from '../hooks/useSocket';
+import React, { useState, useEffect } from "react"
 
+import { Card, CardTitle, CardHeader } from "@/src/components/ui/card"
 
 import ProductChartCard from "@components/chart/productChartCard"
 import { SideNav } from "../components/sideNav"
@@ -48,6 +50,22 @@ const ChartConfig = {
 };
 
 export function Product() {
+  const { sensorData, socket } = useSocket('production');
+
+  // console.log("pro", sensorData)
+  const [totalCnt, setTotalCnt] = useState()
+  const [totalFailCnt, setTotalFailCnt] = useState()
+  const [cnt, setCnt] = useState()
+  const [failCnt, setFailCnt] = useState()
+
+  useEffect(() => {
+    setTotalCnt(sensorData.totalPassCount)
+    setTotalFailCnt(sensorData.totalFailCount)
+    setCnt(sensorData.passCount)
+    setFailCnt(sensorData.failCount)
+  }, [sensorData]);
+  
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
       <SideNav />
@@ -58,22 +76,23 @@ export function Product() {
           <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
             <div className="grid grid-cols-4 grid-rows-4 gap-5">
               <Card className="p-5">
-                <p>양품 :</p>
+                <p>양품 :</p><p>{cnt}</p>
               </Card>
               <Card className="p-5">
-                <p>총 양품 갯수 :</p>
+                <p>총 양품 갯수 :</p><p>{totalCnt}</p>
               </Card>
               <Card className="p-5">
-                <p>불량 :</p>
+                <p>불량 :</p><p>{failCnt}</p>
               </Card>
               <Card className="p-5">
-                <p>총 불량 갯수 :</p>
+                <p>총 불량 갯수 :</p><p>{totalFailCnt}</p>
               </Card>
               <Card className="col-span-3 row-span-2">
                 <CardHeader>
                   <CardTitle>총 생산량</CardTitle>
                 </CardHeader>
                 <ProductChartCard
+                  data={sensorData}
                   xDataKey="time"
                   yDataKey="total"
                   chartData={ChartData}

@@ -8,7 +8,7 @@ import {
   SelectValue,
   SelectGroup,
 } from "@components/ui/select";
-import { Button } from '../../components/ui/button';
+import { Button } from './ui/button';
 import { Input } from "@components/ui/input";
 
 export default function Search(props) {

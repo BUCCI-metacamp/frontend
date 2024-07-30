@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "/src/components/ui/card";
 
@@ -12,10 +12,59 @@ import {
 } from "@components/ui/chart"
 
 
-class ProductChartCard extends Component {
-  render() {
-    const { chartData, chartConfig, totalStroke, xDataKey, yDataKey } = this.props;
+const ProductChartCard = ({data}) => {
 
+  const [chartData, setChartData] = useState([]);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+    
+    // currentTime 5초마다 갱신
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        setCurrentTime(new Date());
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }, []);
+
+    // chartData 5초마다 갱신
+    useEffect(() => {
+      if (data.length > 0) {
+        // data가 변경되었다면 갱신
+        const cnt = filteredData.map(item => ({
+          time: formatTime(currentTime),
+          value: item.value ? 1 : 0
+        }));
+
+      // chartData에 데이터 추가
+      setChartData(prevData => {
+        // chartData가 비어있다면, formattedData를 불러와서 초기화
+        if (prevData.length === 0) {
+          return formattedData;
+        }
+
+        // 시간이 변경되었다면 갱신
+        const newChartData = [...prevData];
+        if (newChartData.length > 0 && newChartData[newChartData.length - 1].time !== formattedData[0].time) {
+          newChartData.push(formattedData[0]);
+        }
+
+        // 최근 5개 값만 가짐
+        return newChartData.slice(-5);
+      });
+    }
+  }, [currentTime, filteredData]);
+
+  const formatTime = (date) => {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  };
+
+  if (!filteredData || filteredData.length === 0) {
+    return <div>Loading...</div>;
+  }
     return (
       <div>
         <ChartContainer config={chartConfig}  className=" h-full w-full">
@@ -48,7 +97,7 @@ class ProductChartCard extends Component {
       </div>
     );
   }
-}
+
 
 export default ProductChartCard;
 

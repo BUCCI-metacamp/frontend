@@ -9,6 +9,7 @@ const useSocket = (room) => {
   
     useEffect(() => {
 
+      console.log(room)
       const token = localStorage.getItem("token");
       const newSocket = io('http://158.247.241.162:3001', {
         withCredentials: false,

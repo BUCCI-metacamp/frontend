@@ -1,6 +1,6 @@
 // pages/DataVisualizationPage.js
 import React from 'react';
-import BooleanChart from '../components/chart/boolChart';
+import BooleanChart from '../components/chart/unitChart/unit1Chart';
 // import LineChart from '../components/LineChart';
 import useSocket from '../hooks/useSocket';
 
