@@ -1,4 +1,4 @@
-import React, { Link, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SideNav } from '@components/sideNav'
 import { Button } from '../../components/ui/button'
 import {
@@ -13,7 +13,7 @@ import Header from '@/src/components/header'
 import { Card, CardContent } from '@/src/components/ui/card'
 
 import { createPost, getPosts, updatePost, deletePost} from '@/src/apis/boardApi/board'
-import Search from '@/src/components/chart/search'
+import Search from '@/src/components/search'
 
   export function ProductionLog() {
   const [posts, setPosts] = useState([]);
@@ -37,51 +37,6 @@ import Search from '@/src/components/chart/search'
     }
   };
 
-  
-// const posts = [
-//   {
-//     number: "1",
-//     title: "React Hooks",
-//     author: "John Doe",
-//     date: "2022-01-01",
-//   },
-//   {
-//     number: "2",
-//     title: "React Hooks",
-//     author: "John Doe",
-//     date: "2022-01-01",
-//   },
-//   {
-//     number: "3",
-//     title: "React Hooks",
-//     author: "John Doe",
-//     date: "2022-01-01",
-//   },
-//   {
-//     number: "4",
-//     title: "React Hooks",
-//     author: "John Doe",
-//     date: "2022-01-01",
-//   },
-//   {
-//     number: "5",
-//     title: "React Hooks",
-//     author: "John Doe",
-//     date: "2022-01-01",
-//   },
-//   {
-//     number: "6",
-//     title: "React Hooks",
-//     author: "John Doe",
-//     date: "2022-01-01",
-//   },
-//   {
-//     number: "7",
-//     title: "React Hooks",
-//     author: "John Doe",
-//     date: "2022-01-01",
-//   }
-// ]
 
 
   return (

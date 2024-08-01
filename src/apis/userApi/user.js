@@ -1,8 +1,22 @@
 import { axiosInstance } from './axiosInstance';
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export const postSignup = async (data) => {
   try {
     const response = await axiosInstance.post('/auth/signup', data);
+    console.log("siup", response)
     return response.data;
   } catch (error) {
     console.error('Error during login:', error);
@@ -21,9 +35,9 @@ export const postLogin = async (data) => {
 };
 
 export const postIdCheck = async (data) => {
-  console.log("🚀 ~ postLogin ~ data:", data)
   try {
-const response = await axiosInstance.get('/auth/duplicate-check', { params: data });
+    const response = await axiosInstance.get('/auth/duplicate-check', { params: data });
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error('Error during login:', error.response?.data || error.message);
@@ -55,7 +69,8 @@ export const postEmailCheck = async (data) => {
 ////관리자 권한
 export const getAllUsers = async () => {
   try {
-    const response = await axiosInstance.get('/users/allUser');
+    const response = await axiosInstance.get('/admin/users');
+    // console.log("userdata", response.data);
     return response.data;
   } catch (error) {
     console.error('Error during login:', error.response?.data || error.message);
@@ -64,9 +79,10 @@ export const getAllUsers = async () => {
 };
 
 // 유저 데이터 삭제 함수 force삭제 진행
-export const deleteUser = async (userId) => {
+export const deleteUser = async (id) => {
   try {
-    const response = await axiosInstance.delete(`/users/deleteForce/${userId}`);
+    console.log(id)
+    const response = await axiosInstance.delete(`/admin/users/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting user', error);
@@ -79,7 +95,7 @@ export const updateUser = async (userId, updatedData) => {
   console.log("🚀 ~ updateUser ~ updatedData:", updatedData)
   console.log("🚀 ~ updateUser ~ userId:", userId)
   try {
-    const response = await axiosInstance.put(`/users/update/${userId}`, updatedData);
+    const response = await axiosInstance.put(`/admin/users/${id}/role`, updatedData);
     console.log("🚀 ~ updateUser ~ response:", response)
     return response.data;
   } catch (error) {
@@ -87,7 +103,7 @@ export const updateUser = async (userId, updatedData) => {
     throw error;
   }
 };
-////////////////////////////////
+
 
 export const postLogout = async () => {
   try {

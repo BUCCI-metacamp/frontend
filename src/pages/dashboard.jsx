@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import useSocket from '../hooks/useSocket';
 
-import { Dice1, ListFilter } from "lucide-react"
-import { Button } from "@/src/components/ui/button"
 import { Card } from "@/src/components/ui/card"
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/src/components/ui/dropdown-menu"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "@/src/components/ui/tabs"
 
 import TimeCard from "@/src/components/timeCard"
@@ -22,15 +19,7 @@ import Unit3ZChart from "../components/chart/unitChart/unit3ZChart";
 export default function Dashboard() {
   const { sensorData, socket } = useSocket('edukit');
   const [activeTab, setActiveTab] = useState('unit1');
-
-  // console.log(sensorData.filter(item => item.name === "No3Motor1Position"));
-  // console.log("sensordata",sensorData)
-  // console.log(typeof(sensorData.filter(item => item.name === "No3Motor1Position")[0].value))
-  // const opt1 = sensorData.filter(item => item.name === 'No2CubeFull');
-  // console.log(opt1[0].value)
-  // const No1ChipEmpty = sensorData.find(item => item.name === "No1ChipEmpty")?.value;
-  // const No1Push = sensorData.find(item => item.name === "No1Push")?.value
-
+  // console.log("senda",sensorData)
 
 
   return (
