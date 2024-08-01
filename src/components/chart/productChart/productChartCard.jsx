@@ -12,7 +12,7 @@ const ProductChartCard = (props) => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
-    }, 1000);
+    }, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -65,7 +65,7 @@ const ProductChartCard = (props) => {
   
 
   return (
-    <div className='flex justify-center'>
+    <div className='flex justify-center mt-12'>
       <ChartContainer config={ChartConfig} className="h-full w-11/12">
         <LineChart
           data={chartData}

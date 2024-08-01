@@ -81,7 +81,19 @@ const Unit3DegreeChart = ({ data }) => {
     <div>
     <Card>
       <CardHeader className="pb-2">
+        <div className='flex flex-row justify-between items-center'>
         <CardTitle className="text-2xl">3호기</CardTitle>
+        { data.filter(item => item.name === "No3PowerState")[0].value ? 
+        (
+          <div className='bg-red-200 w-[30px] h-[20px] flex items-center justify-center rounded'>
+            <p>on</p>
+          </div>
+        ) : (
+          <div className='bg-slate-100 w-[30px] h-[20px] flex items-center justify-center rounded'>
+            <p>off</p>
+          </div>
+        ) }
+        </div>
         <CardDescription>3호기 로봇 팔 각도</CardDescription>
       </CardHeader>
       <CardContent>

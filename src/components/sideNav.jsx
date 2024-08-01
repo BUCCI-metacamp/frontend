@@ -1,22 +1,40 @@
+import React, { useEffect, useState } from 'react';
+
 import { Link, useNavigate } from "react-router-dom"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/src/components/ui/tooltip"
 import { CirclePlus, Home, LineChartIcon, LogIn, LogOut, NotebookIcon, Pencil, Settings, TableProperties, User, UserCircle2, } from "lucide-react"
 // import { getUserInfo } from "../auth/auth";
 
+
+
+  // 임의의 로그인 상태 확인 함수 (실제 구현에 따라 수정 필요)
+  const checkLoginStatus = () => {
+    // 여기서는 예시로 로컬 스토리지의 토큰을 확인
+    return !!localStorage.getItem('token');
+  };
+
 export const SideNav = () => {
-  // const navigate = useNavigate();
-  // const userInfo = getUserI9nfo();
-  // console.log('userInfo : ', userInfo)
+  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 로그인 상태 확인
+    setIsLoggedIn(checkLoginStatus());
+    console.log(isLoggedIn)
+  }, []);
 
   // 로그아웃 버튼 클릭 시 실행되는 함수
   const handleLogout = () => {
-    // localStorage.removeItem('token');
-    navigate('/')
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    setIsLoggedIn(false);
+    // navigate('/')
   }
 
   return (
     <TooltipProvider>
-      <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
+
+      {isLoggedIn ? (      <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
           <Link
             to="/"
@@ -76,6 +94,7 @@ export const SideNav = () => {
           <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
+                    onClick={handleLogout}
                     to="/"
                     className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   >
@@ -152,7 +171,7 @@ export const SideNav = () => {
               </>
             )
           } */}
-          <Tooltip>
+          {/* <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 to="/settings"
@@ -163,9 +182,11 @@ export const SideNav = () => {
               </Link>
             </TooltipTrigger>
             <TooltipContent side="right">Settings</TooltipContent>
-          </Tooltip>
+          </Tooltip> */}
         </nav>
       </aside>
+  ) : (<></>)}
+
     </TooltipProvider>
   )
 }

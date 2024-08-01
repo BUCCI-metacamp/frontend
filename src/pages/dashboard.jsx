@@ -19,7 +19,7 @@ import Unit3ZChart from "../components/chart/unitChart/unit3ZChart";
 export default function Dashboard() {
   const { sensorData, socket } = useSocket('edukit');
   const [activeTab, setActiveTab] = useState('unit1');
-  // console.log("senda",sensorData)
+  console.log("senda",sensorData)
 
 
   return (

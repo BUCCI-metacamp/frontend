@@ -10,7 +10,7 @@ import Header from "../components/header";
 export function Product() {
   const { sensorData, socket } = useSocket('production');
 
-  // console.log("pro", sensorData)
+  console.log("pro", sensorData)
   const [totalCnt, setTotalCnt] = useState()
   const [totalFailCnt, setTotalFailCnt] = useState()
   const [cnt, setCnt] = useState()
