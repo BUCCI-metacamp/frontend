@@ -6,36 +6,33 @@ import { Button } from "@components/ui/button"
 import { Input } from "@components/ui/input"
 import { Label } from "@components/ui/label"
 
+import bgImage from '@/src/assets/bg.png';
+
 import { Link, useNavigate } from "react-router-dom"
+
+import { postLogin } from "@/src/apis/userApi/user"
+
 
 export function Login() {
   const [formData, setFormData] = useState({
-    email: '',
+    userId: '',
     password: '',
   });
 
-  const { setIsLogin } = useAuth(); // setIsLogin 함수를 AuthContext에서 가져옵니다.
+  // const { setIsLogin } = useAuth();
   const navigate = useNavigate();
 
 
   const handleChange = (e) => {
-    const newFormData = e.target.value;
-    setFormData(newFormData)
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('auth/login', formData);
-      console.log('Login successful:', response.data);
-      // 로그인 성공 시 처리 (예: 토큰 저장, 페이지 이동 등)
-    } catch (error) {
-      console.error('There was an error logging in:', error);
-    }
+    const { id, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [id]: value 
+    }));
   };
 
   const validateInputs = () => {
-    if (email === '' || password === '') {
+    if (userId === '' || password === '') {
       return false;
     }
     return true;
@@ -49,23 +46,28 @@ export function Login() {
     }
 
     const data = {
-      userID: email,
-      password: password,
+      userId: formData.userId,
+      password: formData.password,
     };
 
     try {
-      const result = await postLogin(data);
-      if(result.success == true){
-        setIsLogin(true); // 로그인 성공 시 상태 업데이트
-        then(() => {
-            navigate('/');
-        });
+      const result = await postLogin(data); 
+      console.log("🚀 ~ submitClick ~ result:", result)
+      if(result){
+        // setIsLogin(true); // 로그인 성공 시 상태 업데이트
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("userId", data.userId);
+        console.log("login successful")
+        navigate('./dashboard');
+
     }
     else{
         setIsLogin(false); // 로그인 실패 시 상태 업데이트
+        alert("정보를 정확하게 입력해주세요")
+        console.log("login failed")
         then(() => {
             navigate('/');
-        });s
+        });
     }
     
     } catch (error) {
@@ -73,7 +75,7 @@ export function Login() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
     <div className="w-full h-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
@@ -82,13 +84,13 @@ export function Login() {
           </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="email">아이디</Label>
+              <Label htmlFor="userId">아이디</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
+                id="userId"
+                type="userId"
+                placeholder="ID"
                 required
-                value={formData.email}
+                value={formData.userId}
                 onChange={handleChange}
               />
             </div>
@@ -99,6 +101,7 @@ export function Login() {
               <Input 
               id="password" 
               type="password" 
+              placeholder="password"
               required 
               value={formData.password} 
               onChange={handleChange}
@@ -112,10 +115,10 @@ export function Login() {
       </div>
       <div className="hidden bg-muted lg:block">
         <img
-          src="/placeholder.svg"
+          src={bgImage}
           alt="Image"
-          width="1920"
-          height="1080"
+          width="1792"
+          height="1024"
           className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
       </div>
