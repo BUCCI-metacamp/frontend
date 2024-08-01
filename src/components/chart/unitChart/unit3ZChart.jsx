@@ -10,20 +10,23 @@ const ChartConfig = {
   }
 };
 
-const BooleanChart = ({ data }) => {
-  console.log(data)
+const Unit3ZChart = ({ data }) => {
+
   
   const [filteredData, setFilteredData] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  // data가 변경될 때 filtered 갱신
-  useEffect(() => {
-    if (data && data.length > 0) {
-      const filtered = data.filter(item => item.name === 'No1Push');
-      setFilteredData(filtered);
-    }
-  }, [data]);
+    
+    // data가 변경될 때 filtered 갱신
+    useEffect(() => {
+      if (data && data.length > 0) {
+        const filtered = data.filter(item => item.name === 'No3Motor1Position');
+        setFilteredData(filtered);
+      }
+    }, [data]);
+  
+
 
   // currentTime 5초마다 갱신
   useEffect(() => {
@@ -40,7 +43,7 @@ const BooleanChart = ({ data }) => {
       // data가 변경되었다면 갱신
       const formattedData = filteredData.map(item => ({
         time: formatTime(currentTime),
-        value: item.value ? 1 : 0
+        value: item.value
       }));
 
       // chartData에 데이터 추가
@@ -78,14 +81,14 @@ const BooleanChart = ({ data }) => {
     <div>
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-2xl">1호기</CardTitle>
-        <CardDescription>1호기</CardDescription>
+        <CardTitle className="text-2xl">3호기</CardTitle>
+        <CardDescription>3호기 로봇 팔 z축</CardDescription>
       </CardHeader>
       <CardContent>
           <div className="flex justify-between">
             <div className="flex flex-col">
             <div className='flex justify-center'>
-              {(filteredData[0].value) ? (
+              {(filteredData[0].value > 0) ? (
                 <div className='bg-red-500 w-[16px] h-[16px] rounded-sm'/>
               ) : (
                 <div className='bg-slate-300 w-[16px] h-[16px] rounded-sm'/>
@@ -97,26 +100,14 @@ const BooleanChart = ({ data }) => {
             </div>
             <div className="flex flex-col">
             <div className='flex justify-center'>
-            {(filteredData[0].value) ? (
+            {(filteredData[0].value == '0') ? (
                 <div className='bg-red-500 w-[16px] h-[16px] rounded-sm'/>
               ) : (
                 <div className='bg-slate-300 w-[16px] h-[16px] rounded-sm'/>
               )}
               </div>
               <div>
-                전진
-              </div>
-            </div>
-            <div className="flex flex-col">
-            <div className='flex justify-center'>
-            {(filteredData[0].value) ? (
-                <div className='bg-red-500 w-[16px] h-[16px] rounded-sm'/>
-              ) : (
-                <div className='bg-slate-300 w-[16px] h-[16px] rounded-sm'/>
-              )}
-              </div>
-              <div>
-                후진
+                정지
               </div>
             </div>
           </div>
@@ -150,4 +141,4 @@ const BooleanChart = ({ data }) => {
   );
 };
 
-export default BooleanChart;
+export default Unit3ZChart;

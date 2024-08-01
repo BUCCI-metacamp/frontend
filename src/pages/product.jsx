@@ -1,53 +1,51 @@
+import useSocket from '../hooks/useSocket';
+import React, { useState, useEffect } from "react"
+
 import { Card, CardTitle, CardHeader } from "@/src/components/ui/card"
 
-
-import ProductChartCard from "@components/chart/productChartCard"
+import ProductChartCard from "@components/chart/productChart/productChartCard"
 import { SideNav } from "../components/sideNav"
 import Header from "../components/header";
 
-
-const ChartData = [
-  { time: "1", total: 10},
-  { time: "2", total: 20},
-  { time: "3", total: 30},
-  { time: "4", total: 40},
-  { time: "5", total: 50},
-  { time: "6", total: 60},
-];
-
-const DefectiveChartData = [
-  { time: "1", defectiveRatio: 5},
-  { time: "2", defectiveRatio: 6},
-  { time: "3", defectiveRatio: 10},
-  { time: "4", defectiveRatio: 11},
-  { time: "5", defectiveRatio: 15},
-  { time: "6", defectiveRatio: 20},
-];
-
-const ProcessChartData = [
-  { cnt: "1", defective: 0 },
-  { cnt: "2", defective: 0 },
-  { cnt: "3", defective: 0 },
-  { cnt: "4", defective: 1 },
-  { cnt: "5", defective: 1 },
-]
-
-const ChartConfig = {
-  total: {
-    label: "Total",
-    color: "#cc527a",
-  },
-  defectiveRatio: {
-    label: "DefectiveRatio",
-    color: "#e8175d",
-  },
-  defective: {
-    label: "Defective",
-    color: "#6453b2",
-  }
-};
-
 export function Product() {
+  const { sensorData, socket } = useSocket('production');
+
+  // console.log("pro", sensorData)
+  const [totalCnt, setTotalCnt] = useState()
+  const [totalFailCnt, setTotalFailCnt] = useState()
+  const [cnt, setCnt] = useState()
+  const [failCnt, setFailCnt] = useState()
+  const [failWhen, setFailWhen] = useState(null)
+
+  useEffect(() => {
+    setTotalCnt(sensorData.totalPassCount)
+    setTotalFailCnt(sensorData.totalFailCount)
+    setCnt(sensorData.passCount)
+    setFailCnt(sensorData.failCount)
+  }, [sensorData]);
+  
+  useEffect(() => {
+    // 타임스탬프를 기록하는 함수
+    const logTimestamp = () => {
+      
+      setFailWhen(new Date());
+    };
+    // `data.count`가 변경될 때마다 타임스탬프를 찍음
+    logTimestamp();
+  }, []);
+
+  const formatTime = (date) => {
+    if(date !== null ){
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+      return `${hours}:${minutes}:${seconds}`;
+    } else {
+      return '00:00:00';
+    }
+  };
+  
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
       <SideNav />
@@ -55,59 +53,82 @@ export function Product() {
         <Header/>
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <Card className="p-6 bg-slate-100">
-          <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-            <div className="grid grid-cols-4 grid-rows-4 gap-5">
-              <Card className="p-5">
-                <p>양품 :</p>
+            <div className="grid grid-cols-8 grid-rows-5 gap-5 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-8 xl:grid-cols-8">
+              <Card className="p-5 col-span-2 h-[150px]">
+                <div className='flex flex-row gap-3'>
+                  <div className='bg-rose-400 h-[70px] w-[10px] rounded-full'/>
+                  <div className=''>
+                    <p className='font-bold text-slate-500'>양품 :</p><p className='text-2xl font-bold mt-3'>{cnt}</p>
+                    
+                  </div>
+                </div>
+                <div className='mt-4'>
+                  <p className='text-slate-400'>정상</p>
+                </div>
               </Card>
-              <Card className="p-5">
-                <p>총 양품 갯수 :</p>
+              <Card className="p-5 col-span-2 h-[150px]">
+                <div className='flex flex-row gap-3'>
+                  <div className='bg-fuchsia-500 h-[70px] w-[10px] rounded-full'/>
+                  <div className=''>
+                    <p className='font-bold text-slate-500'>총 양품 갯수 :</p><p className='text-2xl font-bold mt-3'>{totalCnt}</p>
+                  </div>
+                </div>
+                <div className='mt-4'>
+                  <p className='text-slate-400'>정상</p>
+                </div>
               </Card>
-              <Card className="p-5">
-                <p>불량 :</p>
+              <Card className="p-5 col-span-2 h-[150px]">
+                <div className='flex flex-row gap-3'>
+                  <div className='bg-rose-400 h-[70px] w-[10px] rounded-full'/>
+                  <div className=''>
+                    <p className='font-bold text-slate-500'>불량 :</p><p className='text-2xl font-bold mt-3'>{failCnt}</p>
+                  </div>
+                </div>
+                <div className='mt-4'>
+                  <p className='text-slate-400'>발생 시간 : {formatTime(failWhen)}</p>
+                </div>
               </Card>
-              <Card className="p-5">
-                <p>총 불량 갯수 :</p>
+              <Card className="p-5 col-span-2 h-[150px]">
+              <div className='flex flex-row gap-3'>
+                <div className='bg-pink-400 h-[70px] w-[10px] rounded-full'/>
+                  <div className=''>
+                    <p className='font-bold text-slate-500'>총 불량 갯수 :</p><p className='text-2xl font-bold mt-3'>{totalFailCnt}</p>
+                  </div>
+                </div>
+                <div className='mt-4'>
+                  <p className='text-slate-400'>정상</p>
+                </div>
+              </Card>
+              <Card className="col-span-5 row-span-4">
+                <CardHeader>
+                  <h3 className='font-bold text-xl'>총 생산량</h3>
+                </CardHeader>
+
+                <ProductChartCard
+                  data={sensorData}
+                  dataKey="totalPassCount"
+                />
               </Card>
               <Card className="col-span-3 row-span-2">
                 <CardHeader>
-                  <CardTitle>총 생산량</CardTitle>
-                </CardHeader>
-                <ProductChartCard
-                  xDataKey="time"
-                  yDataKey="total"
-                  chartData={ChartData}
-                  chartConfig={ChartConfig}
-                  totalStroke={ChartConfig.total.color}
-                  title="총 생산량"
-                />
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>총 불량</CardTitle>
-                </CardHeader>
-                <ProductChartCard
-                  xDataKey="time"
-                  yDataKey="defectiveRatio"
-                  chartData={DefectiveChartData} 
-                  chartConfig={ChartConfig}
-                  totalStroke={ChartConfig.defectiveRatio.color}
-                />
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>현 공정 불량</CardTitle>
+                  <h3 className='font-bold text-lg'>총 불량</h3>
                 </CardHeader>
                 <ProductChartCard className="auto-cols-max"
-                  xDataKey="cnt"
-                  yDataKey="defective"
-                  chartData={ProcessChartData}
-                  chartConfig={ChartConfig}
-                  totalStroke={ChartConfig.defective.color}
+                  data={sensorData}
+                  dataKey="totalFailCount"
+                />
+              </Card>
+              <Card className="col-span-3 row-span-2">
+                <CardHeader>
+                  <h3 className='font-bold text-lg'>현 공정 불량</h3>
+                </CardHeader>
+                <ProductChartCard className="auto-cols-max"
+                  data={sensorData}
+                  dataKey="failCount"
                 />
               </Card>
             </div>
-          </div>
+
           </Card>
         </main>
       </div>
