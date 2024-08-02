@@ -20,7 +20,7 @@ export const SideNav = () => {
   useEffect(() => {
     // 컴포넌트가 마운트될 때 로그인 상태 확인
     setIsLoggedIn(checkLoginStatus());
-    console.log(isLoggedIn)
+    // console.log(isLoggedIn)
   }, []);
 
   // 로그아웃 버튼 클릭 시 실행되는 함수

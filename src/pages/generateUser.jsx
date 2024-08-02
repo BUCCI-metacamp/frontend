@@ -30,6 +30,12 @@ export function GenerateUser() {
     role: ''
   });
 
+  const cancelEditChange = (e) => {
+    setIsEdit(false);
+    setFormData({ userId: '', password: '', name: '', role: '' });
+    document.getElementById('userId').disabled = false;
+  }
+
   const handleEditChange = (user) => {
     setIsEdit(true);
     setFormData({
@@ -80,6 +86,9 @@ export function GenerateUser() {
     };
     if(!isEdit){
       try {
+        if(!validate()){
+          return;
+        }
         if (!await duplicateIdCheck()) { // 중복 아이디 확인
           alert("중복된 id가 존재합니다.");
           return;
@@ -103,8 +112,6 @@ export function GenerateUser() {
           setFormData({ userId: '', password: '', name: '', role: '' }); // 폼 데이터 초기화
           setIsEdit(false); // 수정 모드 해제
           document.getElementById('userId').disabled = false;
-        } else {
-          console.log("erororororor")
         }
       } catch (error){
         console.error('Error updating user', error);
@@ -129,14 +136,37 @@ export function GenerateUser() {
     console.log("유저 목록:", userList); // 유저 목록이 콘솔에 잘 찍히는지 확인
   }, [userList]);
 
+  const validate = () => {
+    const { userId, password, name, role } = formData;
+    if (!userId || userId.trim() === "") {
+      alert("아이디를 입력하세요");
+      return false;
+    }
+    if (!password || password.trim() === "") {
+      alert("비밀번호를 입력하세요");
+      return false;
+    }
+    if (!name || name.trim() === "") {
+      alert("이름을 입력하세요");
+      return false;
+    }
+    if (!role || role.trim() === "") {
+      alert("권한을 선택하세요");
+      return false;
+    }
+    return true;
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
+
       <div className="flex min-h-screen w-full flex-col bg-slate-200">
         <SideNav />
-        <div className="flex flex-col sm:gap-4 sm:pl-14 max-w-[1280px]">
+        <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 max-w-[1280px]">
           <Header />
           <div className="grid flex-1 items-start gap-4 sm:px-6 sm:py-0">
+          <form onSubmit={handleSubmit}>
             <Card className="grid bg-slate-100 h-dvh grid-cols-2 h-fit grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+            
               <div className='flex flex-col gap-4 mr-4 mt-6 md:mx-8 sm:mx-12 xs: mx-16'>
                   <h2 className="text-left text-red-600 font-bold text-2xl">{ isEdit ? ('유저 수정') : ('유저 생성')}</h2>
                   <div className="grid gap-4">
@@ -148,7 +178,6 @@ export function GenerateUser() {
                         id="name"
                         type="text"
                         placeholder="name"
-                        required
                         value={formData.name}
                         onChange={handleNameChange}
                       />
@@ -164,7 +193,6 @@ export function GenerateUser() {
                             placeholder="id"
                             value={formData.userId}
                             onChange={handleIdChange}
-                            required
                             className="w-2/3 border-0 focus:outline-none py-2 px-3 rounded-md"
                           />
                           {isEdit ? ( <></> ) : ( 
@@ -194,7 +222,6 @@ export function GenerateUser() {
                         id="password"
                         type="password"
                         placeholder="password"
-                        required
                         value={formData.password}
                         onChange={handlePwChange}
                       />
@@ -213,23 +240,24 @@ export function GenerateUser() {
                               <SelectItem value="1">1</SelectItem>
                               <SelectItem value="2">2</SelectItem>
                               <SelectItem value="3">3</SelectItem>
+                              <SelectItem value="admin">admin</SelectItem>
                             </SelectGroup>
                           </SelectContent>
                         </Select>
                       </div>
                     </div>
                     { isEdit ? 
-                    (
-                      <div>
+                      (
+                        <div className='gap-4 flex flex-row justify-between'>
+                          <Button type="button" className="w-full bg-primary w-[100px]">
+                            수정
+                          </Button>
+                          <Button type="button" variant="destructive" className="w-[100px]" onClick={cancelEditChange}>취소</Button>
+                        </div>
+                      ) : (
                         <Button type="submit" className="w-full bg-primary">
-                          수정
-                      </Button>
-                      <Button></Button>
-                    </div>
-                    ) : (
-                      <Button type="submit" className="w-full bg-primary">
-                        생성
-                    </Button>
+                          생성
+                        </Button>
                       )
                     }
 
@@ -245,18 +273,17 @@ export function GenerateUser() {
                   select2="아이디"
                   select3="권한"
                 />
-                <Card className="grid  row-start-2 col-start-2 h-2/3 px-4 py-4 gap-4 overflow-y-scroll snap-y h-1/2">
+                <Card className="grid row-start-2 col-start-2 h-2/3 px-4 py-4 gap-4 overflow-y-scroll snap-y h-1/2 bg-slate-100 border-0">
                   {userList.map((user, index) => (
-                    <Card key={index} className="h-fit scroll-snap-item pt-6">
+                    <Card key={index} className="h-full scroll-snap-item pt-6 hover:bg-slate-100 border shadow-md">
                       <CardContent className="gap-4 flex flex-row items-center justify-between">
-                        <div className='flex flex-row gap-2'>
-                          <p>{user.id}. </p>
+                        <div className='flex flex-col gap-2'>
                           <p>이름: {user.name}</p>
                           <p>ID: {user.userId}</p>
                           <p>권한: {user.role}</p>
                         </div>
                         <div className='flex flex-row gap-6  mt-4'>
-                        <button className='bg-slate-500 text-white px-1 py-2 rounded hover:bg-slate-700' onClick={() => handleEditChange(user)}>수정</button>
+                        <button type="button" className='bg-slate-500 text-white px-1 py-2 rounded hover:bg-slate-700' onClick={() => handleEditChange(user)}>수정</button>
                         <DeleteModal user={user} fetchUsers={fetchUsers} />
                         </div>
                       </CardContent>
@@ -264,10 +291,12 @@ export function GenerateUser() {
                   ))}
                 </Card>
               </div>
+              
             </Card>
+            </form>
           </div>
         </div>
       </div>
-    </form>
+
   );
 }

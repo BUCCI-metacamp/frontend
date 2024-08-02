@@ -85,7 +85,7 @@ const Unit2Chart = ({ data }) => {
     <Card>
       <CardHeader className="pb-2">
         <div className='flex flex-row justify-between items-center'>
-        <CardTitle className="text-2xl">2호기</CardTitle>
+        <CardTitle className="text-2xl">가공 공정</CardTitle>
         { data.filter(item => item.name === "No2PowerState")[0].value ? 
         (
           <div className='bg-red-200 w-[30px] h-[20px] flex items-center justify-center rounded'>
@@ -97,7 +97,7 @@ const Unit2Chart = ({ data }) => {
           </div>
         ) }
         </div>
-        <CardDescription>2호기 푸셔 상태</CardDescription>
+        <CardDescription>가공 공정 푸셔 상태</CardDescription>
       </CardHeader>
       <CardContent>
           <div className="flex justify-between">

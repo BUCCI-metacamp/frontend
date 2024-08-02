@@ -8,8 +8,8 @@ const CustomModal = ({ show, handleClose, handleDelete, user }) => {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white rounded-lg p-6 shadow-lg">
         <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onClick={handleClose}>&times;</button>
-        <p className="mb-4">유저 삭제할까말까</p>
-        <div className="flex justify-end">
+        <p className="mb-4">유저를 삭제하시겠습니까?</p>
+        <div className="flex justify-center">
           <button
             className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-700"
             onClick={() => handleDelete(user)}
@@ -48,6 +48,7 @@ const DeleteModal = ({ user, fetchUsers }) => {
   return (
     <div className="justify-center">
       <button
+        type="button"
         className="bg-red-500 text-white px-1 py-2 rounded hover:bg-red-700"
         onClick={handleOpen}
       >

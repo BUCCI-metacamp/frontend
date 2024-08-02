@@ -82,7 +82,7 @@ const Unit3ZChart = ({ data }) => {
     <Card>
       <CardHeader className="pb-2">
       <div className='flex flex-row justify-between items-center'>
-        <CardTitle className="text-2xl">3호기</CardTitle>
+        <CardTitle className="text-2xl">분류 공정</CardTitle>
         { data.filter(item => item.name === "No3PowerState")[0].value ? 
         (
           <div className='bg-red-200 w-[30px] h-[20px] flex items-center justify-center rounded'>
@@ -94,7 +94,7 @@ const Unit3ZChart = ({ data }) => {
           </div>
         ) }
         </div>
-        <CardDescription>3호기 로봇 팔 z축</CardDescription>
+        <CardDescription>분류 공정 로봇 팔 z축</CardDescription>
       </CardHeader>
       <CardContent>
           <div className="flex justify-between">

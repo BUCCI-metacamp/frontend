@@ -80,7 +80,7 @@ const Unit1Chart = ({ data }) => {
     <Card>
       <CardHeader className="pb-2">
         <div className='flex flex-row justify-between items-center'>
-        <CardTitle className="text-2xl">1호기</CardTitle>
+        <CardTitle className="text-2xl">반출 공정</CardTitle>
         { data.filter(item => item.name === "No1PowerState")[0].value ? 
         (
           <div className='bg-red-200 w-[30px] h-[20px] flex items-center justify-center rounded'>
@@ -92,7 +92,7 @@ const Unit1Chart = ({ data }) => {
           </div>
         ) }
         </div>
-        <CardDescription>1호기 푸셔 상태</CardDescription>
+        <CardDescription>반출 푸셔 상태</CardDescription>
       </CardHeader>
       <CardContent>
           <div className="flex justify-between">

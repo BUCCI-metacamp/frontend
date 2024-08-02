@@ -5,10 +5,8 @@
   "scripts": {
 
     "dev": "vite",
-    "build": "vite build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "homepage": "https://bucci-metacamp.github.io/frontend/"
+    "build": "vite build"
+
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.0",

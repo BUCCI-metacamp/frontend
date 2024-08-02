@@ -11,7 +11,7 @@ import BoardRead from './pages/board/boardRead.jsx';
 
 function App() {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
     <SideNav/>
       <Routes>
         <Route path="/" element={<Login />} />
