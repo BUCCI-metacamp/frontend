@@ -31,6 +31,12 @@ export function ProductionLog() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loginUser, setLoginUser] = useState(""); // 로그인 체크 상태
   const navigate = useNavigate();
+  const [maxRows, setMaxRows] = useState(3);
+
+
+  const handleWrite = (e) => {
+    navigate("/board/write");
+  }
 
   useEffect(() => {
     fetchPosts();
@@ -71,13 +77,13 @@ export function ProductionLog() {
         <Header />
         <main className="grid flex-1 items-start gap-4 px-6 sm:py-0 md:gap-8">
           <Card className=" h-dvh bg-slate-100">
-            <CardContent className="flex flex-col gap-8">
-              <h2 className="text-left text-red-600 font-bold text-2xl mt-6">
+            <div className="flex flex-col gap-8 mr-4 mt-6 md:mx-8 sm:mx-12 xs: mx-16">
+              <h2 className="text-left text-red-600 font-bold text-2xl">
                 작업 일지
               </h2>
               <div className="flex justify-between">
-                <Button variant="destructive">
-                  <a href="./write">글쓰기</a>
+                <Button variant="destructive" onClick={handleWrite}>
+                  글쓰기
                 </Button>
                 <PaginationSearch
                   opt1="title"
@@ -109,7 +115,7 @@ export function ProductionLog() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {posts.map((post) => (
+                      {posts.slice(0,maxRows).map((post) => (
                         <TableRow key={post.id} className="hover:cursor-pointer" onClick={() => {navigate(`/board/read/${post.id}`)}}>
                           <TableCell className="text-center">
                             {post.id}
@@ -126,31 +132,26 @@ export function ProductionLog() {
                         </TableRow>
                       ))}
                     </TableBody>
-                    <TableFooter>
-                      <TableRow>
-                        <TableCell colSpan="4" className="text-center">
-                          <div className="inline-flex mt-2">
-                            {Array.from({ length: totalPages }, (_, index) => (
-                              <button
-                                key={index + 1}
-                                onClick={() => paginate(index + 1)}
-                                className={`px-4 py-2 mx-1 border rounded ${
-                                  currentPage === index + 1
-                                    ? "bg-blue-500 text-white"
-                                    : "bg-gray-200 text-gray-700"
-                                }`}
-                              >
-                                {index + 1}
-                              </button>
-                            ))}
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    </TableFooter>
                   </Table>
                 </div>
               </Card>
-            </CardContent>
+              <div className="inline-flex mt-2 flex justify-center">
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button
+                    key={index + 1}
+                    onClick={() => paginate(index + 1)}
+                    className={`px-4 py-2 mx-1 bg-inherit
+                      ${
+                      currentPage === index + 1
+                        ? "bg-blue-500 text-black font-bold"
+                        : "bg-gray-200 text-gray-700"
+                      }`}
+                    >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+            </div>
           </Card>
         </main>
       </div>

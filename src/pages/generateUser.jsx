@@ -273,7 +273,7 @@ export function GenerateUser() {
                   select2="아이디"
                   select3="권한"
                 />
-                <Card className="grid row-start-2 col-start-2 h-2/3 px-4 py-4 gap-4 overflow-y-scroll snap-y h-1/2 bg-slate-100 border-0">
+                <Card className="grid row-start-2 col-start-2 h-2/3 px-4 py-4 gap-4 overflow-y-scroll snap-y h-1/2 bg-slate-100 border-0 shadow-none">
                   {userList.map((user, index) => (
                     <Card key={index} className="h-full scroll-snap-item pt-6 hover:bg-slate-100 border shadow-md">
                       <CardContent className="gap-4 flex flex-row items-center justify-between">

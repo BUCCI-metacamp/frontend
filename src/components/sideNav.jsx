@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/src/components/ui/tooltip"
 import { CirclePlus, Home, LineChartIcon, LogIn, LogOut, NotebookIcon, Pencil, Settings, TableProperties, User, UserCircle2, } from "lucide-react"
+import { DashboardIcon } from '@radix-ui/react-icons';
 // import { getUserInfo } from "../auth/auth";
 
 
@@ -34,26 +35,22 @@ export const SideNav = () => {
   return (
     <TooltipProvider>
 
-      {isLoggedIn ? (      <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
-        <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-          <Link
-            to="/"
-            className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
-          >
-            <Home className="h-4 w-4 transition-all group-hover:scale-110" />
-            <span className="sr-only">Home</span>
-          </Link>
+      {isLoggedIn ? (
+  
+        <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
+        <nav className='flex flex-col h-full justify-between'>
+        <div className="flex flex-col items-center gap-4 px-2 sm:py-5">
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 to="/dashboard"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
               >
-                <TableProperties className="h-5 w-5" />
-                <span className="sr-only">Dashboard</span>
+                <DashboardIcon className="h-5 w-5" />
+                <span className="sr-only">대시보드</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Dashboard</TooltipContent>
+            <TooltipContent side="right">대시보드</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -62,10 +59,10 @@ export const SideNav = () => {
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <LineChartIcon className="h-5 w-5" />
-                <span className="sr-only">Product</span>
+                <span className="sr-only">제품 현황</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Product</TooltipContent>
+            <TooltipContent side="right">제품 현황</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -74,10 +71,10 @@ export const SideNav = () => {
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <NotebookIcon className="h-5 w-5" />
-                <span className="sr-only">Production Log</span>
+                <span className="sr-only">작업 일지</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Production Log</TooltipContent>
+            <TooltipContent side="right">작업 일지</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -86,24 +83,27 @@ export const SideNav = () => {
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <UserCircle2 className="h-5 w-5" />
-                <span className="sr-only">Generate User</span>
+                <span className="sr-only">유저 관리</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Generate User</TooltipContent>
+            <TooltipContent side="right">유저 관리</TooltipContent>
           </Tooltip>
-          <Tooltip>
-                <TooltipTrigger asChild>
-                  <Link
-                    onClick={handleLogout}
-                    to="/"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                  >
-                    <LogOut className="h-5 w-5" />
-                    <span className="sr-only">LogOut</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right">LogOut</TooltipContent>
-              </Tooltip>
+          </div>
+          <div className='flex justify-center mb-8'>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  onClick={handleLogout}
+                  to="/"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span className="sr-only">로그아웃</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">로그아웃</TooltipContent>
+            </Tooltip>
+          </div>
           {/* {userInfo && userInfo.groups[0] === 'admin' ? (
             <>
             <Tooltip>
