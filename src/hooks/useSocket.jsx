@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 
 const useSocket = (room) => {
   const [sensorData, setSensorData] = useState([]);
+  const [powerData, setPowerData] = useState([]);
   const [socket, setSocket] = useState(null);
 
   
@@ -27,6 +28,10 @@ const useSocket = (room) => {
         setSensorData(receivedData);
         // 여기서 receivedData를 처리하는 로직을 추가할 수 있습니다.
       });
+
+      newSocket.on('change_power', (receivedData) => {
+        setPowerData(receivedData);
+      })
   
       setSocket(newSocket);
       // 컴포넌트가 언마운트될 때 소켓 연결을 닫습니다.

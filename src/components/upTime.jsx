@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { axiosInstance } from '@/src/apis/userApi/axiosInstance';
-
+import useSocket from '@/src/hooks/useSocket';
 
 const Timer = ({ startTime }) => {
   const [elapsedTime, setElapsedTime] = useState(0);
+  const { powerData, socket } = useSocket('change_power');
+  const { powerState, setPowerState } = setState(0);
+
+
+  console.log("pdata", powerData)
 
   useEffect(() => {
     const startTimeInMs = new Date(startTime).getTime(); // 타임스탬프 형식을 밀리초로 변환
@@ -23,7 +28,7 @@ const Timer = ({ startTime }) => {
 
   return (
     <div>
-      <p>가동 시간: {formatTime(elapsedTime)}</p>
+      <p>가동 시간:  {formatTime(elapsedTime)}</p>
     </div>
   );
 };
