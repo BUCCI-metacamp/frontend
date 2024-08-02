@@ -5,10 +5,7 @@ import useSocket from '@/src/hooks/useSocket';
 const Timer = ({ startTime }) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const { powerData, socket } = useSocket('change_power');
-  const { powerState, setPowerState } = setState(0);
 
-
-  console.log("pdata", powerData)
 
   useEffect(() => {
     const startTimeInMs = new Date(startTime).getTime(); // 타임스탬프 형식을 밀리초로 변환
