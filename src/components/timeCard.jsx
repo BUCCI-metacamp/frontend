@@ -11,13 +11,12 @@ const TimeCard = (props) => {
 
     useEffect(() => {
       if (data && data.length > 0) {
-        const chipColor = data.filter(item => item.name === "No2SensingMemory");
-        if (chipColor.length > 0) setChipColor(chipColor[0]?.value);
-        const diceData = data.filter(item => item.name === "DiceValue");
-        if (diceData.length > 0) setDiceData(diceData[0]?.value);
+      const chipColor = data.filter(item => item.name === "No2SensingMemory");
+      if (chipColor.length > 0) setChipColor(chipColor[0]?.value);
+      const diceData = data.filter(item => item.name === "DiceValue");
+      if (diceData.length > 0) setDiceData(diceData[0]?.value);
       }
     }, [data]);
-
 
     return (
       <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
@@ -27,22 +26,22 @@ const TimeCard = (props) => {
           <div className='flex flex-row gap-24 col-span-2 justify-center'>
             <div className="flex gap-3 items-center ">
               <p>칩 색상 : </p> 
-              {{chipColor} ? (
-                <div className="bg-red-500 w-[48px] h-[32px] rounded-sm"/>
+              { chipColor ? (
+                <div className='bg-slate-300 w-[32px] h-[32px] rounded-sm'/>
               ) : (
-                <div className='bg-slate-300 w-[48px] h-[32px] rounded-sm'/>
+                <div className="bg-red-500 w-[32px] h-[32px] rounded-sm"/>
               )}
             </div>
             <div className="flex flex-row gap-3 items-center">
               <p>주사위 눈 : </p> 
               <div>
                 { 
-                  (diceData === 1) ? <Dice1Icon className="w-[100px] h-[100px]"/> : 
-                  (diceData === 2) ? <Dice2Icon className="w-[100px] h-[100px]"/> :
-                  (diceData === 3) ? <Dice3Icon className="w-[100px] h-[100px]"/> :
-                  (diceData === 4) ? <Dice4Icon className="w-[100px] h-[100px]"/> :
-                  (diceData === 5) ? <Dice5Icon className="w-[100px] h-[100px]"/> :
-                  (diceData === 6) ? <Dice6Icon className="w-[100px] h-[100px]"/> :
+                  (diceData === '1') ? <Dice1Icon className="w-[80px] h-[80px]"/> : 
+                  (diceData === '2') ? <Dice2Icon className="w-[80px] h-[80px]"/> :
+                  (diceData === '3') ? <Dice3Icon className="w-[80px] h-[80px]"/> :
+                  (diceData === '4') ? <Dice4Icon className="w-[80px] h-[80px]"/> :
+                  (diceData === '5') ? <Dice5Icon className="w-[80px] h-[80px]"/> :
+                  (diceData === '6') ? <Dice6Icon className="w-[80px] h-[80px]"/> :
                   <DicesIcon className="w-[80px] h-[80px]"/>
                 }
               </div>

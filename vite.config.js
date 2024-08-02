@@ -4,6 +4,7 @@ import { defineConfig } from "vite"
 
 export default defineConfig({
   plugins: [react()],
+  // base: "/frontend/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./"),
@@ -12,3 +13,7 @@ export default defineConfig({
     },
   },
 })
+
+    // "predeploy": "npm run build",
+    // "deploy": "gh-pages -d build",
+    // "homepage": "https://bucci-metacamp.github.io/frontend/",

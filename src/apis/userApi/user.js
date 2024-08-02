@@ -1,17 +1,17 @@
 import { axiosInstance } from './axiosInstance';
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+// axiosInstance.interceptors.request.use(
+//   (config) => {
+//     const token = localStorage.getItem('token');
+//     if (token) {
+//       config.headers['Authorization'] = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 export const postSignup = async (data) => {
   try {
@@ -27,6 +27,8 @@ export const postSignup = async (data) => {
 export const postLogin = async (data) => {
   try {
     const response = await axiosInstance.post('/auth/login', data);
+    console.log("login", response.data)
+    
     return response.data;
   } catch (error) {
     console.error('Error during login:', error.response?.data || error.message);
@@ -38,10 +40,11 @@ export const postIdCheck = async (data) => {
   try {
     const response = await axiosInstance.get('/auth/duplicate-check', { params: data });
     console.log(response.data)
-    return response.data;
+    return response.data.available;
   } catch (error) {
     console.error('Error during login:', error.response?.data || error.message);
-    throw error;
+    // throw error;
+    return false;
   }
 };
 
@@ -70,7 +73,7 @@ export const postEmailCheck = async (data) => {
 export const getAllUsers = async () => {
   try {
     const response = await axiosInstance.get('/admin/users');
-    // console.log("userdata", response.data);
+    console.log("userdata", response.data);
     return response.data;
   } catch (error) {
     console.error('Error during login:', error.response?.data || error.message);
@@ -91,18 +94,30 @@ export const deleteUser = async (id) => {
 };
 
 // 유저 데이터 수정 함수 
-export const updateUser = async (userId, updatedData) => {
+export const updateUser = async (id, updatedData) => {
   console.log("🚀 ~ updateUser ~ updatedData:", updatedData)
-  console.log("🚀 ~ updateUser ~ userId:", userId)
+  console.log("🚀 ~ updateUser ~ userId:", id)
   try {
     const response = await axiosInstance.put(`/admin/users/${id}/role`, updatedData);
-    console.log("🚀 ~ updateUser ~ response:", response)
+    console.log("🚀 ~ updateUser ~ response:", response.data)
     return response.data;
   } catch (error) {
     console.error('Error updating user', error);
     throw error;
   }
 };
+
+// export const updatePassword = async (id, updatedPw) => {
+//   console.log("updatePassword", updatedPw)
+//   try{
+//     const response = await axiosInstance.put(`/users/${id}`, updatedPw);
+//     console.log("response.data", response.data)
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error updating pw', error);
+//     throw error;
+//   }
+// }
 
 
 export const postLogout = async () => {

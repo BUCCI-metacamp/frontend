@@ -12,7 +12,7 @@ const ChartConfig = {
 
 const Unit1Chart = ({ data }) => {
 
-  
+
   const [filteredData, setFilteredData] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -79,8 +79,20 @@ const Unit1Chart = ({ data }) => {
     <div>
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-2xl">1호기</CardTitle>
-        <CardDescription>1호기 푸셔 상태</CardDescription>
+        <div className='flex flex-row justify-between items-center'>
+        <CardTitle className="text-2xl">반출 공정</CardTitle>
+        { data.filter(item => item.name === "No1PowerState")[0].value ? 
+        (
+          <div className='bg-red-200 w-[30px] h-[20px] flex items-center justify-center rounded'>
+            <p>on</p>
+          </div>
+        ) : (
+          <div className='bg-slate-100 w-[30px] h-[20px] flex items-center justify-center rounded'>
+            <p>off</p>
+          </div>
+        ) }
+        </div>
+        <CardDescription>반출 푸셔 상태</CardDescription>
       </CardHeader>
       <CardContent>
           <div className="flex justify-between">

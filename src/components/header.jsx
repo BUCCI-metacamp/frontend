@@ -12,37 +12,40 @@ import { Button } from "@components/ui/button"
 
 import UpTime from "@components/upTime"
 import NowTime from '@components/nowTime'
+import { User2Icon } from 'lucide-react'
 
-export default class Header extends Component {
-  render() {
-    return (
-        <header className="sticky top-0 z-30 flex h-14 items-center justify-end gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-          <NowTime/>
-          <UpTime/>
-          <DropdownMenu>
+
+  const user = localStorage.getItem('userId')
+  console.log(user)
+
+
+const Header = () => {
+
+  return (
+      <header className="sticky top-0 z-30 flex bg-slate-100 h-14 items-center justify-end gap-4 border-b-2 px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+        <NowTime/>
+        <UpTime/>
+        {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
                 size="icon"
-                className="overflow-hidden rounded-full"
+                className="rounded-full top-10"
               >
-                <img
-                  src="/placeholder-user.jpg"
-                  alt="Avatar"
-                  className="overflow-hidden rounded-full"
-                />
+
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>{user} 님</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
-        </header>
-    )
-  }
+          </DropdownMenu> */}
+      </header>
+  )
 }
+
+export default Header;
