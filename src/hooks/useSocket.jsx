@@ -21,24 +21,55 @@ const useSocket = (room) => {
         newSocket.emit('request_join_room', room);
         console.log("joined room name : ", room);
       });
-  
-      const eventName = room === 'edukit' ? 'edukit_data' : 'production_data';
-  
-      newSocket.on(eventName, (receivedData) => {
-        setSensorData(receivedData);
-        // 여기서 receivedData를 처리하는 로직을 추가할 수 있습니다.
-      });
+      
 
-      newSocket.on('change_power', (receivedData) => {
-        setPowerData(receivedData);
-      })
+      // const eventName = room === 'edukit' ? 'edukit_data' : 'production' ? 'production_data' : 'change_power';
+      // if (room === 'edukit') {
+      //   newSocket.on('edukit_data', (receivedData) => {
+      //     console.log("Received edukit data:", receivedData);
+      //     setSensorData(receivedData);
+      //   });
+      // } else if (room === 'production') {
+      //   newSocket.on('production_data', (receivedData) => {
+      //     console.log("Received production data:", receivedData);
+      //     setSensorData(receivedData);
+      //   }) 
+      // } else if (room === 'uptime') {
+      //     newSocket.on('change_power', (receivedData) => {
+      //       console.log("Received power change:", receivedData);
+      //       setSensorData(receivedData);
+      //     })
+      //   } else {
+      //     console.log("뭐임")
+      //   }
+
+
+        if (room === 'edukit') {
+          newSocket.on('edukit_data', (receivedData) => {
+            // console.log("Received edukit data:", receivedData);
+            setSensorData(receivedData);
+          })
+        } else if (room === 'production') {
+          newSocket.on('production_data', (receivedData) => {
+            // console.log("Received production data:", receivedData);
+            setSensorData(receivedData);
+          })
+        } else if (room === 'uptime') {
+          newSocket.on('change_power', (receivedData) => {
+            // console.log("Received power change:", receivedData);
+            setSensorData(receivedData);
+          })
+        }
+
+
   
       setSocket(newSocket);
+      console.log("setsocket")
       // 컴포넌트가 언마운트될 때 소켓 연결을 닫습니다.
       return () => {
         newSocket.close();
       };
-    }, [room]); // 빈 배열은 이 효과가 컴포넌트 마운트 시 한 번만 실행됨을 의미합니다.
+    }, [room]);
   
     return { sensorData, socket } ;
   };

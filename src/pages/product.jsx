@@ -58,13 +58,15 @@ export function Product() {
     if (prevSensorData.totalFailCount !== sensorData.totalFailCount) {
       console.log('Total Fail Count changed:', sensorData.totalFailCount);
     }
-    if (prevSensorData?.passCount !== sensorData?.passCount !== '0') {
-      console.log("prev: ", prevSensorData)
+    if (typeof prevSensorData?.passCount === 'number' && prevSensorData?.passCount !== sensorData?.passCount) {
+      // console.log("prev: ", prevSensorData)
       console.log('Pass Count changed:', sensorData.passCount);
       const newPassWhen = new Date();
+      setPassWhen(newPassWhen);
       localStorage.setItem('passWhen', newPassWhen.toString());
     }
-    if (prevSensorData.failCount !== sensorData.failCount !== '0') {
+    // console.log(prevSensorData?.failCount !== sensorData?.failCount);
+    if (typeof prevSensorData?.failCount === 'number' && prevSensorData?.failCount !== sensorData?.failCount) {
       console.log('Fail Count changed:', sensorData.failCount);
       const newFailWhen = new Date();
       setFailWhen(newFailWhen);
