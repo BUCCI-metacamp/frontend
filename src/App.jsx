@@ -19,7 +19,7 @@ function App() {
         <Route path="/product" element={<Product />} />
         <Route path="/board/productionLog" element={<ProductionLog />} />
         <Route path="/board/write" element={<BoardWrite />} />
-        <Route path="/board/read" element={<BoardRead />} />
+        <Route path="/board/read/:id" element={<BoardRead />} />
         <Route path="/generateUser" element={<GenerateUser />} />
       </Routes>
     </BrowserRouter>
