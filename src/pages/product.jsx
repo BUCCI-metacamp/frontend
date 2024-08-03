@@ -106,22 +106,7 @@ export function Product() {
     }
     setFailRatioLog([...failRatioArray]);
 
-    if (
-      (typeof sensorData.failCount === "number" &&
-        failCnt !== sensorData.failCount) ||
-      (typeof sensorData.passCount === "number" && cnt !== sensorData.passCount)
-    ) {
-      let failRatio =
-        (sensorData.failCount /
-          (sensorData.passCount + sensorData.failCount)) *
-        100;
-      setCurrentFailRatioLog([
-        ...currentFailRatioLog,
-        { time: new Date(), failRatio: failRatio },
-      ]);
-    } else if (currentFailRatioLog.length > 0 && (sensorData.passCount + sensorData.failCount === 0)) {
-      setCurrentFailRatioLog([]);
-    }
+    setCurrentFailRatioLog(sensorData?.currentFailCountRatioLog.slice(-5));
   }, [sensorData]);
 
 
@@ -221,7 +206,7 @@ export function Product() {
                 <ProductChartCard
                   className="auto-cols-max"
                   data={ currentFailRatioLog }
-                  dataKey="failRatio"
+                  dataKey="ratio"
                 />
               </Card>
             </div>

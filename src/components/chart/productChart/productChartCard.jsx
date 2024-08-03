@@ -72,9 +72,9 @@ const ProductChartCard = (props) => {
             dataKey={dataKey}
             type="monotone"
             stroke={
-              dataKey == "totalFailCount"
+              dataKey == "failRatio"
                 ? "var(--color-totalFailCount)"
-                : dataKey == "failCount"
+                : dataKey == "ratio"
                 ? "var(--color-failCount)"
                 : "var(--color-totalPassCount)"
             }
