@@ -12,14 +12,11 @@ const ChartConfig = {
 
 const Unit2Chart = ({ data }) => {
 
-  // console.log("2", data)
+
   const [filteredData, setFilteredData] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
 
-// console.log("outpoint", data.filter(item => item.name === 'No2OutPoint')[0])
-// console.log("inpoint", data.filter(item => item.name === 'No2InPoint')[0])
-  // if( data.filter(item => item.name === '"No2OutPoint"') ){
     
     // data가 변경될 때 filtered 갱신
     useEffect(() => {

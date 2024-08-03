@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { axiosInstance } from '@/src/apis/userApi/axiosInstance';
 import useSocket from '@/src/hooks/useSocket';
 
-const Timer = ({ startTime }) => {
+const Timer = ({ startTime, isPowerOff, setPowerOff, fetchStartTime }) => {
   const [elapsedTime, setElapsedTime] = useState(0);
-  const { powerData, socket } = useSocket('change_power');
+
+  const { sensorData, socket } = useSocket('uptime');
 
 
   useEffect(() => {
@@ -16,6 +17,14 @@ const Timer = ({ startTime }) => {
     return () => clearInterval(intervalId);
   }, [startTime]);
 
+  useEffect(() => {
+    if (sensorData === 1 || sensorData === 0) {
+      setPowerOff(sensorData === 1 ? false : true);
+      fetchStartTime();
+
+    }
+  }, [sensorData]);
+
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -24,53 +33,59 @@ const Timer = ({ startTime }) => {
   };
 
   return (
-    <div>
-      <p>가동 시간:  {formatTime(elapsedTime)}</p>
-    </div>
+    <>
+      {!isPowerOff ? (
+        <div>
+          <p>가동 시간: {formatTime(elapsedTime)}</p>
+        </div>
+      ) : (
+        <div>
+          <p>가동 시간: 00:00</p>
+        </div>
+      )}
+    </>
   );
 };
+
 const UpTime = () => {
   const [startTime, setStartTime] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isPowerOff, setPowerOff] = useState(false);
+
+  const fetchStartTime = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axiosInstance.get('/dashboard/uptime', {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = response.data;
+
+      if(data.value){
+        setStartTime(data.time);
+
+      }
+      else {
+        setStartTime(0)
+        setPowerOff(true);
+      }
+    } catch (error) {
+      console.error('Error fetching the timestamp:', error);
+
+    }
+  };
 
   useEffect(() => {
-    const fetchStartTime = async () => {
-      try {
-        const token = localStorage.getItem("token")
-        const response = await axiosInstance.get('/dashboard/uptime', {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        });
-
-        const data = response.data;
-
-        setStartTime(data.time);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching the timestamp:', error);
-        setLoading(false);
-      }
-    };
-
     fetchStartTime();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!startTime) {
-    return <div>Error loading start time.</div>;
-  }
 
   return (
     <div>
-      <Timer startTime={startTime} />
+      <Timer startTime={startTime} isPowerOff={isPowerOff} setPowerOff={setPowerOff} fetchStartTime={fetchStartTime} />
     </div>
   );
 };
 
 export default UpTime;
-
-

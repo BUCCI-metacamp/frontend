@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/src/components/ui/tooltip"
 import { CirclePlus, Home, LineChartIcon, LogIn, LogOut, NotebookIcon, Pencil, Settings, TableProperties, User, UserCircle2, } from "lucide-react"
 import { DashboardIcon } from '@radix-ui/react-icons';
-// import { getUserInfo } from "../auth/auth";
 
 
 
@@ -21,7 +20,6 @@ export const SideNav = () => {
   useEffect(() => {
     // 컴포넌트가 마운트될 때 로그인 상태 확인
     setIsLoggedIn(checkLoginStatus());
-    // console.log(isLoggedIn)
   }, []);
 
   // 로그아웃 버튼 클릭 시 실행되는 함수
@@ -29,7 +27,6 @@ export const SideNav = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     setIsLoggedIn(false);
-    // navigate('/')
   }
 
   return (
