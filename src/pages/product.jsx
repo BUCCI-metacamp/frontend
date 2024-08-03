@@ -102,30 +102,37 @@ export function Product() {
                     <p className='font-bold text-slate-500'>양품 :</p><p className='text-2xl font-bold mt-3'>{cnt}</p>
                   </div>
                 </div>
-                <div className='mt-4'>
-                  <p className='text-slate-400'>발생 시간: {formatTime(passWhen)}</p>
+                <div className='mt-4 flex flex-row gap-2'>
+                  <p className='text-slate-400'>발생 시간: </p>
+                  { cnt >= 1 ?
+                    (<p className='text-slate-400'>{formatTime(passWhen)}</p>) :
+                    (<p className='text-slate-400'>00:00:00</p>)
+                  }                
                 </div>
               </Card>
               <Card className="p-5 col-span-2 h-44">
                 <div className='flex flex-row gap-3'>
                   <div className='bg-fuchsia-500 h-[70px] w-[10px] rounded-full'/>
                   <div className=''>
-                    <p className='font-bold text-slate-500'>총 생산량 :</p><p className='text-2xl font-bold mt-3'>{totalCnt}</p>
+                    <p className='font-bold text-slate-500'>불량 :</p><p className='text-2xl font-bold mt-3'>{failCnt}</p>
                   </div>
                 </div>
-                <div className='mt-4'>
-                  <p className='text-slate-400'>정상</p>
+                <div className='mt-4 flex flex-row gap-2'>
+                  <p className='text-slate-400'>발생 시간: </p>
+                  { failCnt >= 1 ?
+                    (<p className='text-slate-400'>{formatTime(failWhen)}</p>) :
+                    (<p className='text-slate-400'>00:00:00</p>)
+                  }
                 </div>
               </Card>
               <Card className="p-5 col-span-2 h-44">
                 <div className='flex flex-row gap-3'>
                   <div className='bg-rose-400 h-[70px] w-[10px] rounded-full'/>
                   <div className=''>
-                    <p className='font-bold text-slate-500'>불량 :</p><p className='text-2xl font-bold mt-3'>{failCnt}</p>
+                    <p className='font-bold text-slate-500'>총 생산량 :</p><p className='text-2xl font-bold mt-3'>{totalCnt}</p>
                   </div>
                 </div>
                 <div className='mt-4'>
-                  <p className='text-slate-400'>발생 시간: {formatTime(failWhen)}</p>
                 </div>
               </Card>
               <Card className="p-5 col-span-2 h-44">
@@ -136,14 +143,12 @@ export function Product() {
                   </div>
                 </div>
                 <div className='mt-4'>
-                  <p className='text-slate-400'>정상</p>
                 </div>
               </Card>
               <Card className="col-span-5 row-span-4">
                 <CardHeader>
                   <h3 className='font-bold text-xl'>총 생산량</h3>
                 </CardHeader>
-
                 <ProductChartCard
                   data={sensorData}
                   dataKey="totalPassCount"

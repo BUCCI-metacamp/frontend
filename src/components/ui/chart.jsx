@@ -3,7 +3,6 @@ import * as RechartsPrimitive from "recharts"
 
 import { cn } from "@/src/lib/utils"
 
-// Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = {
   light: "",
   dark: ".dark"

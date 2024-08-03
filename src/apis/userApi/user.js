@@ -1,18 +1,5 @@
 import { axiosInstance } from './axiosInstance';
 
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem('token');
-//     if (token) {
-//       config.headers['Authorization'] = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
-
 export const postSignup = async (data) => {
   try {
     const response = await axiosInstance.post('/auth/signup', data);
@@ -43,7 +30,6 @@ export const postIdCheck = async (data) => {
     return response.data.available;
   } catch (error) {
     console.error('Error during login:', error.response?.data || error.message);
-    // throw error;
     return false;
   }
 };
@@ -58,16 +44,6 @@ export const postEmailCheck = async (data) => {
     throw error;
   }
 };
-
-// export const postLoginCheck = async () => {
-//   try {
-//     const response = await axiosInstance.get('/auth/loginCheck');
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error during login:', error.response?.data || error.message);
-//     throw error;
-//   }
-// };
 
 ////관리자 권한
 export const getAllUsers = async () => {
@@ -106,18 +82,6 @@ export const updateUser = async (id, updatedData) => {
     throw error;
   }
 };
-
-// export const updatePassword = async (id, updatedPw) => {
-//   console.log("updatePassword", updatedPw)
-//   try{
-//     const response = await axiosInstance.put(`/users/${id}`, updatedPw);
-//     console.log("response.data", response.data)
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error updating pw', error);
-//     throw error;
-//   }
-// }
 
 
 export const postLogout = async () => {

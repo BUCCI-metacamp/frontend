@@ -23,27 +23,6 @@ const useSocket = (room) => {
       });
       
 
-      // const eventName = room === 'edukit' ? 'edukit_data' : 'production' ? 'production_data' : 'change_power';
-      // if (room === 'edukit') {
-      //   newSocket.on('edukit_data', (receivedData) => {
-      //     console.log("Received edukit data:", receivedData);
-      //     setSensorData(receivedData);
-      //   });
-      // } else if (room === 'production') {
-      //   newSocket.on('production_data', (receivedData) => {
-      //     console.log("Received production data:", receivedData);
-      //     setSensorData(receivedData);
-      //   }) 
-      // } else if (room === 'uptime') {
-      //     newSocket.on('change_power', (receivedData) => {
-      //       console.log("Received power change:", receivedData);
-      //       setSensorData(receivedData);
-      //     })
-      //   } else {
-      //     console.log("뭐임")
-      //   }
-
-
         if (room === 'edukit') {
           newSocket.on('edukit_data', (receivedData) => {
             // console.log("Received edukit data:", receivedData);

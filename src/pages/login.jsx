@@ -19,7 +19,6 @@ export function Login() {
     password: '',
   });
 
-  // const { setIsLogin } = useAuth();
   const navigate = useNavigate();
 
 
@@ -54,7 +53,6 @@ export function Login() {
       const result = await postLogin(data); 
       console.log("🚀 ~ submitClick ~ result:", result)
       if(result){
-        // setIsLogin(true); // 로그인 성공 시 상태 업데이트
         localStorage.setItem("token", result.token);
         localStorage.setItem("userId", data.userId);
         console.log("login successful")

@@ -4,8 +4,6 @@ import useSocket from '@/src/hooks/useSocket';
 
 const Timer = ({ startTime, isPowerOff, setPowerOff, fetchStartTime }) => {
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [previousSensorData, setPreviousSensorData] = useState(undefined);
-  const [sensorDataHistory, setSensorDataHistory] = useState([]);
   const { sensorData, socket } = useSocket('uptime');
 
   useEffect(() => {
@@ -21,12 +19,9 @@ const Timer = ({ startTime, isPowerOff, setPowerOff, fetchStartTime }) => {
     if (sensorData === 1 || sensorData === 0) {
       setPowerOff(sensorData === 1 ? false : true);
       fetchStartTime();
-      if (sensorData !== previousSensorData) {
-        setSensorDataHistory((prevHistory) => [...prevHistory, sensorData]);
-        setPreviousSensorData(sensorData);
-      }
+
     }
-  }, [sensorData, previousSensorData]);
+  }, [sensorData]);
 
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
@@ -52,7 +47,6 @@ const Timer = ({ startTime, isPowerOff, setPowerOff, fetchStartTime }) => {
 
 const UpTime = () => {
   const [startTime, setStartTime] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [isPowerOff, setPowerOff] = useState(false);
 
   const fetchStartTime = async () => {
@@ -83,9 +77,6 @@ const UpTime = () => {
   useEffect(() => {
     fetchStartTime();
   }, []);
-
-
-
 
 
   return (
