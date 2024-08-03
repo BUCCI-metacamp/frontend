@@ -144,7 +144,7 @@ export function Product() {
         <Header/>
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <Card className="p-6 bg-slate-100">
-            <div className="grid grid-cols-8 grid-rows-5 gap-5 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-8 xl:grid-cols-8">
+            <div className="grid grid-cols-8 grid-rows-5 gap-5 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 xl:grid-cols-8">
               <Card className="p-5 col-span-2 h-44">
                 <div className='flex flex-row gap-3'>
                   <div className='bg-rose-400 h-[70px] w-[10px] rounded-full'/>

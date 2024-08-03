@@ -53,8 +53,15 @@ export function Login() {
       const result = await postLogin(data); 
       console.log("🚀 ~ submitClick ~ result:", result)
       if(result){
+        console.log("result:", result)
         localStorage.setItem("token", result.token);
-        localStorage.setItem("userId", data.userId);
+        const userInfo = {
+          name: result.name,
+          role: result.role
+        }
+        localStorage.setItem("userRole", userInfo.role)
+        
+        console.log(localStorage.getItem("userInfo", userInfo.role))
         console.log("login successful")
         navigate('./dashboard');
 

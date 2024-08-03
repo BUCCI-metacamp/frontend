@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { getPost } from '@/src/apis/boardApi/board';
 
 import { useNavigate } from "react-router-dom"
-
+import { deletePost } from '@/src/apis/boardApi/board'
 
 
 
@@ -23,6 +23,16 @@ const handleCancelClick = (e) => {
   navigate(-1);
 }
 
+  const handleDeleteClick = async (e) => {
+    try{
+    const id = post.id;
+    await deletePost(id);
+    alert("삭제되었습니다.")
+    navigate(`/board/productionLog`); 
+    } catch(err){
+    }
+  }
+
   useEffect(() => {
     fetchPost(id);
   }, [id]);
@@ -36,6 +46,7 @@ const handleCancelClick = (e) => {
     return <div>Post not found</div>;
   }
 
+  
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
@@ -87,7 +98,9 @@ const handleCancelClick = (e) => {
           </Card>
           <div className="flex flex-row justify-end py-6 gap-8">
             <Button variant="outline" onClick={handleCancelClick}>목록</Button>
-            <Button variant="destructive" onClick={handleCancelClick}>삭제</Button>
+            { localStorage.getItem('userRole') == 'admin' ? 
+              <Button variant="destructive" onClick={handleDeleteClick}>삭제</Button> : <></>
+            }
           </div>
         </div>
       </div>

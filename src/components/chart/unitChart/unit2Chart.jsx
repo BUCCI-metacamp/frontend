@@ -119,7 +119,7 @@ const Unit2Chart = ({ data }) => {
               )}
               </div>
               <div>
-                전방
+                동작중
               </div>
             </div>
             <div className="flex flex-col">
@@ -131,7 +131,7 @@ const Unit2Chart = ({ data }) => {
               )}
               </div>
               <div>
-                후방
+                정지
               </div>
             </div>
           </div>

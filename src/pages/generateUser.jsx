@@ -45,7 +45,7 @@ export function GenerateUser() {
       role: user.role
     });
     document.getElementById('userId').disabled = true;
-    alert("수정하세요")
+    alert("수정 가능합니다")
   }
 
   const handleNameChange = (e) => {
@@ -237,9 +237,8 @@ export function GenerateUser() {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              <SelectItem value="1">1</SelectItem>
-                              <SelectItem value="2">2</SelectItem>
-                              <SelectItem value="3">3</SelectItem>
+                              <SelectItem value="1">작업자</SelectItem>
+                              <SelectItem value="2">관리자</SelectItem>
                               <SelectItem value="admin">admin</SelectItem>
                             </SelectGroup>
                           </SelectContent>

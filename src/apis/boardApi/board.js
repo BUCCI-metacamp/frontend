@@ -43,8 +43,7 @@ export const updatePost = (id, postData) => {
   return apiClient.put(`/reports/${id}`, postData);
 };
 
-export const deletePost = (id, password) => {
+export const deletePost = (id) => {
   return apiClient.delete(`/reports/${id}`, {
-    data: { password }
   });
 };

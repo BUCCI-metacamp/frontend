@@ -27,9 +27,9 @@ const TimeCard = (props) => {
             <div className="flex gap-3 items-center ">
               <p>칩 색상 : </p> 
               { chipColor ? (
-                <div className='bg-slate-300 w-[32px] h-[32px] rounded-sm'/>
+                <div className='bg-slate-300 rounded-sm w-[32px] h-[32px] md :'/>
               ) : (
-                <div className="bg-red-500 w-[32px] h-[32px] rounded-sm"/>
+                <div className="bg-red-500 rounded-sm w-[32px] h-[32px]"/>
               )}
             </div>
             <div className="flex flex-row gap-3 items-center">

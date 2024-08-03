@@ -19,7 +19,7 @@ import Unit3ZChart from "../components/chart/unitChart/unit3ZChart";
 export default function Dashboard() {
   const { sensorData, socket } = useSocket('edukit');
   const [activeTab, setActiveTab] = useState('unit1');
-  console.log("senda",sensorData)
+  // console.log("senda",sensorData)
 
 
   return (
@@ -81,9 +81,9 @@ export default function Dashboard() {
                     option1="주사위 적재 여부"
                     option1Value1="없음"
                     option1Value2="있음"
-                    option2="푸셔 on/off"
-                    option2Value1="on"
-                    option2Value2="off"
+                    option2="푸셔"
+                    option2Value1="동작 중"
+                    option2Value2="정지"
                     option3="칩 센서"
                     option3Value1="접근 확인"
                     option3Value2="접근 미확인"

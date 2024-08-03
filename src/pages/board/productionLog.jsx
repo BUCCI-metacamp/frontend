@@ -100,8 +100,8 @@ export function ProductionLog() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="text-center font-bold text-lg bg-gray-300 w-[100px]">
-                          게시글 번호
+                        <TableHead className="text-center font-bold text-lg bg-gray-300 w-[120px]">
+                          문서 번호
                         </TableHead>
                         <TableHead className="text-center font-bold text-lg bg-gray-300">
                           제목
@@ -118,7 +118,7 @@ export function ProductionLog() {
                       {posts.slice(0,maxRows).map((post) => (
                         <TableRow key={post.id} className="hover:cursor-pointer" onClick={() => {navigate(`/board/read/${post.id}`)}}>
                           <TableCell className="text-center">
-                            {post.id}
+                            EDU-00{post.id}
                           </TableCell>
                           <TableCell className="text-center max-w-52">
                             {post.title}

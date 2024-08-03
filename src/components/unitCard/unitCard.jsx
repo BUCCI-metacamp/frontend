@@ -101,11 +101,7 @@ const UnitCard = (props) => {
         </div> : <></>
         }
       </CardContent>
-      <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
-        <div className="text-xs text-muted-foreground">
-          Updated <time dateTime="2023-11-23">November 23, 2023</time>
-        </div>
-      </CardFooter>
+
     </Card>
   )
 }

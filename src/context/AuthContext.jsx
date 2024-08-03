@@ -8,13 +8,34 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [isLogin, setIsLogin] = useState(false);
-  const [userRole, setUserRole] = useState(null); // 사용자 역할 상태 추가
-  const [loginChecked, setLoginChecked] = useState(false);
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [userRole, setUserRole] = useState();
+  const [userName, setUserName] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
 
+  const login = (info) => {
+    
+    console.log("12412414", info.role)
+    setIsLoggedin(true);
+    setUserRole(info.role);
+    setUserName(info.name);
+    console.log(userRole)
+  };
+
+
+
+
+
+  const logout = () => {
+    setIsLoggedin(false);
+    // setUserRole(null);
+    // setUserName(null);
+    setUserInfo(null); // 사용자 역할 설정
+
+  };
 
   return (
-    <AuthContext.Provider value={{ isLogin, setIsLogin, userRole, loginChecked }}>
+    <AuthContext.Provider value={{ isLoggedin, setIsLoggedin, userName, userRole, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
