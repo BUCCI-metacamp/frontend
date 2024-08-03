@@ -8,7 +8,7 @@ import Header from "../components/header";
 export function Product() {
   const { sensorData, socket } = useSocket("production");
 
-  console.log("pro", sensorData)
+
   const [totalCnt, setTotalCnt] = useState(0)
   const [totalFailCnt, setTotalFailCnt] = useState(0)
   const [cnt, setCnt] = useState(0)
@@ -69,7 +69,7 @@ export function Product() {
       setPassWhen(newPassWhen);
       localStorage.setItem('passWhen', newPassWhen.toString());
     }
-    // console.log(prevSensorData?.failCount !== sensorData?.failCount);
+
     if (typeof prevSensorData?.failCount === 'number' && prevSensorData?.failCount !== sensorData?.failCount) {
       console.log('Fail Count changed:', sensorData.failCount);
       const newFailWhen = new Date();
@@ -150,7 +150,6 @@ export function Product() {
                   <div className='bg-rose-400 h-[70px] w-[10px] rounded-full'/>
                   <div className=''>
                     <p className='font-bold text-slate-500'>양품 :</p><p className='text-2xl font-bold mt-3'>{cnt}</p>
-                    
                   </div>
                 </div>
                 <div className='mt-4 flex flex-row gap-2'>
@@ -174,7 +173,6 @@ export function Product() {
                     (<p className='text-slate-400'>{formatTime(failWhen)}</p>) :
                     (<p className='text-slate-400'>00:00:00</p>)
                   }
-
                 </div>
               </Card>
               <Card className="p-5 col-span-2 h-44">
@@ -208,7 +206,7 @@ export function Product() {
               </Card>
               <Card className="col-span-3 row-span-2">
                 <CardHeader>
-                  <h3 className="font-bold text-lg">총 불량</h3>
+                  <h3 className="font-bold text-lg">총 불량률</h3>
                 </CardHeader>
                 <ProductChartCard
                   className="auto-cols-max"
@@ -218,7 +216,7 @@ export function Product() {
               </Card>
               <Card className="col-span-3 row-span-2">
                 <CardHeader>
-                  <h3 className="font-bold text-lg">현 공정 불량</h3>
+                  <h3 className="font-bold text-lg">현 공정 불량률</h3>
                 </CardHeader>
                 <ProductChartCard
                   className="auto-cols-max"

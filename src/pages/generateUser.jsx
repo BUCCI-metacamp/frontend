@@ -249,10 +249,10 @@ export function GenerateUser() {
                     { isEdit ? 
                       (
                         <div className='gap-4 flex flex-row justify-between'>
-                          <Button type="button" className="w-full bg-primary w-[100px]">
+                          <Button type="submit" className="w-full bg-primary w-[80px]">
                             수정
                           </Button>
-                          <Button type="button" variant="destructive" className="w-[100px]" onClick={cancelEditChange}>취소</Button>
+                          <Button type="button" variant="destructive" className="w-[80px]" onClick={cancelEditChange}>취소</Button>
                         </div>
                       ) : (
                         <Button type="submit" className="w-full bg-primary">

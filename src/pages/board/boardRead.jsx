@@ -87,6 +87,7 @@ const handleCancelClick = (e) => {
           </Card>
           <div className="flex flex-row justify-end py-6 gap-8">
             <Button variant="outline" onClick={handleCancelClick}>목록</Button>
+            <Button variant="destructive" onClick={handleCancelClick}>삭제</Button>
           </div>
         </div>
       </div>

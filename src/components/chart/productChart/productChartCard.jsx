@@ -11,15 +11,7 @@ const ProductChartCard = (props) => {
 
   const [chartData, setChartData] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setCurrentTime(new Date());
-  //     console.log('dataaaaaaaaaaaaaa', data);
-  //   }, 5000);
-
-  //   return () => clearInterval(intervalId);
-  // }, []);
+;
 
   useEffect(() => {
     if (data) {
@@ -34,20 +26,6 @@ const ProductChartCard = (props) => {
         failRatio: 0
       }));
       setChartData(formattedData.length ? formattedData : emptyData);
-      // const formattedData = {
-      //   time: formatTime(currentTime),
-      //   totalFailCount: data.totalFailCount,
-      //   totalPassCount: data.totalPassCount,
-      //   failCount: data.failCount
-      // };
-
-      // setChartData(prevData => {
-      //   const newChartData = [...prevData];
-      //   if (newChartData.length === 0 || newChartData[newChartData.length - 1].time !== formattedData.time) {
-      //     newChartData.push(formattedData);
-      //   }
-      //   return newChartData.slice(-5);
-      // });
     }
   }, [data]);
 

@@ -31,7 +31,7 @@ export function ProductionLog() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loginUser, setLoginUser] = useState(""); // 로그인 체크 상태
   const navigate = useNavigate();
-  const [maxRows, setMaxRows] = useState(3);
+  const [maxRows, setMaxRows] = useState(10);
 
 
   const handleWrite = (e) => {
