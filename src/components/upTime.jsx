@@ -4,7 +4,9 @@ import useSocket from '@/src/hooks/useSocket';
 
 const Timer = ({ startTime, isPowerOff, setPowerOff, fetchStartTime }) => {
   const [elapsedTime, setElapsedTime] = useState(0);
+
   const { sensorData, socket } = useSocket('uptime');
+
 
   useEffect(() => {
     const startTimeInMs = new Date(startTime).getTime(); // 타임스탬프 형식을 밀리초로 변환

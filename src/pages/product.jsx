@@ -6,9 +6,9 @@ import { SideNav } from "../components/sideNav"
 import Header from "../components/header";
 
 export function Product() {
-  const { sensorData, socket } = useSocket('production');
+  const { sensorData, socket } = useSocket("production");
 
-  // 상태 선언
+  console.log("pro", sensorData)
   const [totalCnt, setTotalCnt] = useState(0)
   const [totalFailCnt, setTotalFailCnt] = useState(0)
   const [cnt, setCnt] = useState(0)
@@ -24,13 +24,17 @@ export function Product() {
   });
   const [prevSensorData, setPrevSensorData] = useState(null);
 
+  const [totalCountLog, setTotalCountLog] = useState([]);
+  const [failRatioLog, setFailRatioLog] = useState([]);
+  const [currentFailRatioLog, setCurrentFailRatioLog] = useState([]);
+
   useEffect(() => {
     // 처음 렌더링 시 prevSensorData를 설정하지 않고 return
     if (prevSensorData === null) {
       setPrevSensorData(sensorData);
       return;
     }
-
+    
     // 상태 업데이트
     if (!isNaN(sensorData.totalPassCount)) {
       setTotalCnt(sensorData.totalPassCount);
@@ -47,7 +51,7 @@ export function Product() {
     if (!isNaN(sensorData.failCountLog)) {
       setFailCnt(sensorData.failCount);
     }
-
+    
     // 이전 데이터를 현재 데이터로 업데이트
     setPrevSensorData(sensorData);
 
@@ -72,34 +76,81 @@ export function Product() {
       setFailWhen(newFailWhen);
       localStorage.setItem('failWhen', newFailWhen.toString());
     }
+
+    if (Array.isArray(sensorData.totalCountLog)) {
+      const reverse = sensorData.totalCountLog?.slice().reverse();
+      setTotalCountLog([...reverse]);
+    } else {
+      setTotalCountLog([]);
+    }
+
+    let totalMap = new Map(
+      sensorData.totalCountLog
+        ?.reverse()
+        .map((item) => [item.time, item.totalCount || 0])
+    );
+    let failMap = new Map(
+      sensorData.failCountLog
+        ?.reverse()
+        .map((item) => [item.time, item.totalCount || 0])
+    );
+    let failRatioArray = [];
+    for (let time of totalMap.keys()) {
+      if (failMap.has(time)) {
+        // 같은 time을 가진 항목이 있으면 value를 계산
+        failRatioArray.push({
+          time: time,
+          failRatio: (failMap.get(time) / totalMap.get(time)) * 100 || 0,
+        });
+      }
+    }
+    setFailRatioLog([...failRatioArray]);
+
+    if (
+      (typeof sensorData.failCount === "number" &&
+        failCnt !== sensorData.failCount) ||
+      (typeof sensorData.passCount === "number" && cnt !== sensorData.passCount)
+    ) {
+      let failRatio =
+        (sensorData.failCount /
+          (sensorData.passCount + sensorData.failCount)) *
+        100;
+      setCurrentFailRatioLog([
+        ...currentFailRatioLog,
+        { time: new Date(), failRatio: failRatio },
+      ]);
+    } else if (currentFailRatioLog.length > 0 && (sensorData.passCount + sensorData.failCount === 0)) {
+      setCurrentFailRatioLog([]);
+    }
   }, [sensorData]);
 
-  // 타임 포맷 함수
+
   const formatTime = (date) => {
-    if (date !== null) {
+    if(date !== null ){
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');
       const seconds = String(date.getSeconds()).padStart(2, '0');
       return `${hours}:${minutes}:${seconds}`;
     } else {
-      return '00:00:00';
+      return "00:00:00";
     }
   };
-
+  
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
       <SideNav />
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 max-w-[1280px]">
-        <Header />
+      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14  max-w-[1280px]">
+        <Header/>
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <Card className="p-6 bg-slate-100">
             <div className="grid grid-cols-8 grid-rows-5 gap-5 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-8 xl:grid-cols-8">
-              <Card className="p-5 col-span-2 h-44 ">
+              <Card className="p-5 col-span-2 h-44">
                 <div className='flex flex-row gap-3'>
                   <div className='bg-rose-400 h-[70px] w-[10px] rounded-full'/>
                   <div className=''>
                     <p className='font-bold text-slate-500'>양품 :</p><p className='text-2xl font-bold mt-3'>{cnt}</p>
+                    
                   </div>
                 </div>
                 <div className='mt-4 flex flex-row gap-2'>
@@ -123,6 +174,7 @@ export function Product() {
                     (<p className='text-slate-400'>{formatTime(failWhen)}</p>) :
                     (<p className='text-slate-400'>00:00:00</p>)
                   }
+
                 </div>
               </Card>
               <Card className="p-5 col-span-2 h-44">
@@ -147,29 +199,31 @@ export function Product() {
               </Card>
               <Card className="col-span-5 row-span-4">
                 <CardHeader>
-                  <h3 className='font-bold text-xl'>총 생산량</h3>
+                  <h3 className="font-bold text-xl">총 생산량</h3>
                 </CardHeader>
                 <ProductChartCard
-                  data={sensorData}
-                  dataKey="totalPassCount"
+                  data={ totalCountLog }
+                  dataKey="totalCount"
                 />
               </Card>
               <Card className="col-span-3 row-span-2">
                 <CardHeader>
-                  <h3 className='font-bold text-lg'>총 불량</h3>
+                  <h3 className="font-bold text-lg">총 불량</h3>
                 </CardHeader>
-                <ProductChartCard className="auto-cols-max"
-                  data={sensorData}
-                  dataKey="totalFailCount"
+                <ProductChartCard
+                  className="auto-cols-max"
+                  data={ failRatioLog }
+                  dataKey="failRatio"
                 />
               </Card>
               <Card className="col-span-3 row-span-2">
                 <CardHeader>
-                  <h3 className='font-bold text-lg'>현 공정 불량</h3>
+                  <h3 className="font-bold text-lg">현 공정 불량</h3>
                 </CardHeader>
-                <ProductChartCard className="auto-cols-max"
-                  data={sensorData}
-                  dataKey="failCount"
+                <ProductChartCard
+                  className="auto-cols-max"
+                  data={ currentFailRatioLog }
+                  dataKey="failRatio"
                 />
               </Card>
             </div>
@@ -177,5 +231,7 @@ export function Product() {
         </main>
       </div>
     </div>
-  )
+  );
 }
+
+// className="sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4"
