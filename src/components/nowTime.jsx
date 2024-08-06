@@ -20,7 +20,7 @@ const NowTime = () => {
 
   return (
     <div>
-      <p>현재 시간 {formatTime(currentTime)}</p>
+      <p className='text-white'>현재 시간 {formatTime(currentTime)}</p>
     </div>
   );
 };

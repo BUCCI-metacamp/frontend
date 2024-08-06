@@ -19,13 +19,13 @@ const TimeCard = (props) => {
     }, [data]);
 
     return (
-      <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
+      <Card className="sm:col-span-2 bg-[#262852] border-0 p-4" x-chunk="dashboard-05-chunk-0">
       <CardContent className="mt-6">
         <div className='grid grid-cols-3 justify-between'>
-          <CardTitle>{title}</CardTitle>
+          <CardTitle className="text-white">{title}</CardTitle>
           <div className='flex flex-row gap-24 col-span-2 justify-center'>
             <div className="flex gap-3 items-center ">
-              <p>칩 색상 : </p> 
+              <p className='text-white'>칩 색상 : </p> 
               { chipColor ? (
                 <div className='bg-slate-300 rounded-sm w-[32px] h-[32px] md :'/>
               ) : (
@@ -33,7 +33,7 @@ const TimeCard = (props) => {
               )}
             </div>
             <div className="flex flex-row gap-3 items-center">
-              <p>주사위 눈 : </p> 
+              <p className='text-white'>주사위 눈 : </p> 
               <div>
                 { 
                   (diceData === '1') ? <Dice1Icon className="w-[80px] h-[80px]"/> : 
@@ -42,7 +42,7 @@ const TimeCard = (props) => {
                   (diceData === '4') ? <Dice4Icon className="w-[80px] h-[80px]"/> :
                   (diceData === '5') ? <Dice5Icon className="w-[80px] h-[80px]"/> :
                   (diceData === '6') ? <Dice6Icon className="w-[80px] h-[80px]"/> :
-                  <DicesIcon className="w-[80px] h-[80px]"/>
+                  <DicesIcon className="w-[80px] h-[80px] bg-white rounded-md"/>
                 }
               </div>
             </div>

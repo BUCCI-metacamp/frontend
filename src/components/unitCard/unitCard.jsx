@@ -58,10 +58,10 @@ const UnitCard = (props) => {
   }, [type, data]);
 
   return (
-    <Card x-chunk="dashboard-05-chunk-3">
+    <Card x-chunk="dashboard-05-chunk-3" className="bg-[#262852] border-0">
       <CardHeader className="flex flex-row items-start bg-muted/50">
         <div className="grid gap-3">
-          <CardTitle className="group flex items-center gap-2">
+          <CardTitle className="group flex items-center gap-2 ">
             {title}
           </CardTitle>  
           <CardDescription>
@@ -72,7 +72,7 @@ const UnitCard = (props) => {
       <CardContent className="p-6 text-sm">
         { option1 ?  
         <div className="gap-3 flex flex-row">
-            <p className="font-semibold">{option1} : </p> {opt1 ? <p> {option1Value1}</p> : <p> {option1Value2}</p>}
+            <p className="font-semibold text-white">{option1} : </p> {opt1 ? <p className='text-white'> {option1Value1}</p> : <p className='text-white'> {option1Value2}</p>}
         </div> : <></>
         }
         
@@ -80,7 +80,7 @@ const UnitCard = (props) => {
         <div className="gap-3">
           <Separator className="my-4" />
           <div className="gap-3 flex flex-row">
-            <p className="font-semibold">{option2} : </p> {opt2 ? <p> {option2Value1}</p> : <p> {option2Value2}</p>}
+            <p className="font-semibold text-white">{option2} : </p> {opt2 ? <p className='text-white'> {option2Value1}</p> : <p className='text-white'> {option2Value2}</p>}
           </div>
         </div> : <></>
         }
@@ -88,14 +88,14 @@ const UnitCard = (props) => {
         <div className="gap-3">
           <Separator className="my-4" />
           <div className="gap-3 flex flex-row">
-            <p className="font-semibold">{option3} :</p> {opt3 ? <p>{option3Value1}</p> : <p>{option3Value2}</p>}
+            <p className="font-semibold text-white">{option3} :</p> {opt3 ? <p className='text-white'>{option3Value1}</p> : <p className='text-white'>{option3Value2}</p>}
           </div>
         </div> : <></>
         }
         { option4 ?  
         <div className="gap-3">
           <Separator className="my-4" />
-          <div className="gap-3 flex flex-row">
+          <div className="gap-3 flex flex-row text-white">
             <p className="font-semibold">{option4} :</p> {opt4 ? <p>{option4Value1}</p> : <p>{option4Value2}</p>}
           </div>
         </div> : <></>

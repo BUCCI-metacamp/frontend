@@ -36,11 +36,11 @@ const Timer = ({ startTime, isPowerOff, setPowerOff, fetchStartTime }) => {
     <>
       {!isPowerOff ? (
         <div>
-          <p>가동 시간: {formatTime(elapsedTime)}</p>
+          <p className='text-white'>가동 시간: {formatTime(elapsedTime)}</p>
         </div>
       ) : (
         <div>
-          <p>가동 시간: 00:00</p>
+          <p className='text-white'>가동 시간: 00:00</p>
         </div>
       )}
     </>

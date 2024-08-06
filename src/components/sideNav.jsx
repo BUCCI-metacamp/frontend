@@ -35,14 +35,15 @@ export const SideNav = () => {
 
       {isLoggedIn ? (
   
-        <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col  bg-background sm:flex">
+        <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col bg-slate-400 drop-shadow-md sm:flex">
         <nav className='flex flex-col h-full justify-between'>
         <div className="flex flex-col items-center gap-4 px-2 sm:py-5">
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 to="/dashboard"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                style={{ border: '2px solid white' }}
+                className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-lg bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"              
               >
                 <FactoryIcon className="h-5 w-5" />
                 <span className="sr-only">대시보드</span>
@@ -55,8 +56,9 @@ export const SideNav = () => {
               <TooltipTrigger asChild>
                 <Link
                   to="/product"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                >
+                  style={{ border: '2px solid white' }}
+                  className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-lg bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"              
+                  >
                   <LineChartIcon className="h-5 w-5" />
                   <span className="sr-only">제품 현황</span>
                 </Link>
@@ -70,8 +72,9 @@ export const SideNav = () => {
               <TooltipTrigger asChild>
                 <Link
                   to="/board/productionLog"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                >
+                  style={{ border: '2px solid white' }}
+                  className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-lg bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"              
+                  >
                   <NotebookIcon className="h-5 w-5" />
                   <span className="sr-only">작업 일지</span>
                 </Link>
@@ -85,7 +88,8 @@ export const SideNav = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/generateUser"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                style={{ border: '2px solid white' }}
+                className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-lg bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"              
               >
                 <UserCircle2 className="h-5 w-5" />
                 <span className="sr-only">유저 관리</span>

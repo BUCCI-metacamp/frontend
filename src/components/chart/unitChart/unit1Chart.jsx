@@ -77,10 +77,10 @@ const Unit1Chart = ({ data }) => {
 
   return (
     <div>
-    <Card>
+    <Card className="bg-[#262852] border-0">
       <CardHeader className="pb-2">
         <div className='flex flex-row justify-between items-center'>
-        <CardTitle className="text-2xl">반출 공정</CardTitle>
+        <CardTitle className="text-2xl text-white">반출 공정</CardTitle>
         { data.filter(item => item.name === "No1PowerState")[0].value ? 
         (
           <div className='bg-red-200 w-[30px] h-[20px] flex items-center justify-center rounded'>
@@ -104,7 +104,7 @@ const Unit1Chart = ({ data }) => {
                 <div className='bg-slate-300 w-[16px] h-[16px] rounded-sm'/>
               )}
               </div>
-              <div>
+              <div className='text-white'>
                 동작
               </div>
             </div>
@@ -116,7 +116,7 @@ const Unit1Chart = ({ data }) => {
                 <div className='bg-slate-300 w-[16px] h-[16px] rounded-sm'/>
               )}
               </div>
-              <div>
+              <div className='text-white'>
                 정지
               </div>
             </div>
