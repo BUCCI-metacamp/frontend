@@ -71,7 +71,7 @@ const Unit1Chart = ({ data }) => {
   };
 
   if (!filteredData || filteredData.length === 0) {
-    return <div>Loading...</div>;
+    return <div>oading...</div>;
   }
 
 

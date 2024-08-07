@@ -123,14 +123,14 @@ export function Product() {
   
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
+    <div className="flex min-h-screen w-full flex-col bg-[#15103A]">
       <SideNav />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14  max-w-[1280px]">
         <Header/>
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-          <Card className="p-6 bg-slate-100">
-            <div className="grid grid-cols-8 grid-rows-5 gap-5 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 xl:grid-cols-8">
-              <Card className="p-5 col-span-2 h-44">
+          <Card className="p-6 bg-inherit border-0">
+            <div className="grid grid-cols-8 gap-5 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 xl:grid-cols-8">
+              <Card className="p-5 col-span-2 h-44 bg-[#262852] border-0">
                 <div className='flex flex-row gap-3'>
                   <div className='bg-rose-400 h-[70px] w-[10px] rounded-full'/>
                   <div className=''>
@@ -145,7 +145,7 @@ export function Product() {
                   }                
                 </div>
               </Card>
-              <Card className="p-5 col-span-2 h-44">
+              <Card className="p-5 col-span-2 h-44 bg-[#262852] border-0">
                 <div className='flex flex-row gap-3'>
                   <div className='bg-fuchsia-500 h-[70px] w-[10px] rounded-full'/>
                   <div className=''>
@@ -160,7 +160,7 @@ export function Product() {
                   }
                 </div>
               </Card>
-              <Card className="p-5 col-span-2 h-44">
+              <Card className="p-5 col-span-2 h-44 bg-[#262852] border-0">
                 <div className='flex flex-row gap-3'>
                   <div className='bg-rose-400 h-[70px] w-[10px] rounded-full'/>
                   <div className=''>
@@ -170,17 +170,17 @@ export function Product() {
                 <div className='mt-4'>
                 </div>
               </Card>
-              <Card className="p-5 col-span-2 h-44">
+              <Card className="p-5 col-span-2 h-44 bg-[#262852] border-0">
                 <div className='flex flex-row gap-3'>
                   <div className='bg-pink-400 h-[70px] w-[10px] rounded-full'/>
                   <div className=''>
                     <p className='font-bold text-slate-500'>총 불량 갯수 :</p><p className='text-2xl font-bold mt-3'>{totalFailCnt}</p>
                   </div>
                 </div>
-                <div className='mt-4'>
-                </div>
               </Card>
-              <Card className="col-span-5 row-span-4">
+              </div>
+              <div className='flex flex-row gap-4 mt-4'>
+              <Card className="col-span-4 row-span-1 bg-[#262852] border-0 w-full">
                 <CardHeader>
                   <h3 className="font-bold text-xl">총 생산량</h3>
                 </CardHeader>
@@ -189,7 +189,7 @@ export function Product() {
                   dataKey="totalCount"
                 />
               </Card>
-              <Card className="col-span-3 row-span-2">
+              <Card className="col-span-2 row-span-1 bg-[#262852] border-0 w-full">
                 <CardHeader>
                   <h3 className="font-bold text-lg">총 불량률</h3>
                 </CardHeader>
@@ -199,7 +199,7 @@ export function Product() {
                   dataKey="failRatio"
                 />
               </Card>
-              <Card className="col-span-3 row-span-2">
+              <Card className="col-span-2 row-span-1 bg-[#262852] border-0 w-full">
                 <CardHeader>
                   <h3 className="font-bold text-lg">현 공정 불량률</h3>
                 </CardHeader>

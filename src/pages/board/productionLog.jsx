@@ -71,12 +71,12 @@ export function ProductionLog() {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
+    <div className="flex min-h-screen w-full flex-col  bg-[#15103A]">
       <SideNav />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 max-w-[1280px]">
         <Header />
         <main className="grid flex-1 items-start gap-4 px-6 sm:py-0 md:gap-8">
-          <Card className=" h-dvh bg-slate-100">
+          <Card className=" h-dvh bg-inherit border-0">
             <div className="flex flex-col gap-8 mr-4 mt-6 md:mx-8 sm:mx-12 xs: mx-16">
               <h2 className="text-left text-red-600 font-bold text-2xl">
                 작업 일지
@@ -95,8 +95,8 @@ export function ProductionLog() {
                   sendSearch={handleSearch}
                 />
               </div>
-              <Card>
-                <div className="h-100">
+              <Card className="border-0">
+                <div className="h-100 bg-[#262852]">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -114,7 +114,7 @@ export function ProductionLog() {
                         </TableHead>
                       </TableRow>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="text-white">
                       {posts.slice(0,maxRows).map((post) => (
                         <TableRow key={post.id} className="hover:cursor-pointer" onClick={() => {navigate(`/board/read/${post.id}`)}}>
                           <TableCell className="text-center">
