@@ -36,13 +36,13 @@ const TimeCard = (props) => {
               <p className='text-white'>주사위 눈 : </p> 
               <div>
                 { 
-                  (diceData === '1') ? <Dice1Icon className="w-[80px] h-[80px]"/> : 
-                  (diceData === '2') ? <Dice2Icon className="w-[80px] h-[80px]"/> :
-                  (diceData === '3') ? <Dice3Icon className="w-[80px] h-[80px]"/> :
-                  (diceData === '4') ? <Dice4Icon className="w-[80px] h-[80px]"/> :
-                  (diceData === '5') ? <Dice5Icon className="w-[80px] h-[80px]"/> :
-                  (diceData === '6') ? <Dice6Icon className="w-[80px] h-[80px]"/> :
-                  <DicesIcon className="w-[80px] h-[80px] bg-white rounded-md"/>
+                  (diceData === '1') ? <Dice1Icon className="w-[80px] h-[80px] text-primary-foreground"/> : 
+                  (diceData === '2') ? <Dice2Icon className="w-[80px] h-[80px] text-primary-foreground"/> :
+                  (diceData === '3') ? <Dice3Icon className="w-[80px] h-[80px] text-primary-foreground"/> :
+                  (diceData === '4') ? <Dice4Icon className="w-[80px] h-[80px] text-primary-foreground"/> :
+                  (diceData === '5') ? <Dice5Icon className="w-[80px] h-[80px] text-primary-foreground"/> :
+                  (diceData === '6') ? <Dice6Icon className="w-[80px] h-[80px] text-primary-foreground"/> :
+                  <DicesIcon className="w-[80px] h-[80px] rounded-md text-primary-foreground"/>
                 }
               </div>
             </div>

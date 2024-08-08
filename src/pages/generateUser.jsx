@@ -159,13 +159,13 @@ export function GenerateUser() {
 
   return (
 
-      <div className="flex min-h-screen w-full flex-col bg-slate-200">
+      <div className="flex min-h-screen w-full flex-col bg-[#15103A]">
         <SideNav />
         <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 max-w-[1280px]">
           <Header />
           <div className="grid flex-1 items-start gap-4 sm:px-6 sm:py-0">
           <form onSubmit={handleSubmit}>
-            <Card className="grid bg-slate-100 h-dvh grid-cols-2 h-fit grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+            <Card className="grid  bg-inherit border-0 h-dvh grid-cols-2 h-fit grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
             
               <div className='flex flex-col gap-4 mr-4 mt-6 md:mx-8 sm:mx-12 xs: mx-16'>
                   <h2 className="text-left text-red-600 font-bold text-2xl">{ isEdit ? ('유저 수정') : ('유저 생성')}</h2>
@@ -184,8 +184,8 @@ export function GenerateUser() {
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="userId">아이디</Label>
-                      <div className='focus-within:ring-black rounded-lg focus-within:ring-2'>
-                        <div className='flex items-center space-x-0.5 bg-white gap-6 rounded-md border m-0.5 relative'>
+                      <div className='focus-within:ring-white rounded-md focus-within:ring-2'>
+                        <div className='flex items-center space-x-0.5 bg-slate-400 gap-6 rounded-md border-0  relative'>
                           <input
                             maxLength='8'
                             id="userId"
@@ -193,7 +193,7 @@ export function GenerateUser() {
                             placeholder="id"
                             value={formData.userId}
                             onChange={handleIdChange}
-                            className="w-2/3 border-0 focus:outline-none py-2 px-3 rounded-md"
+                            className="w-2/3 border-0 focus:outline-none py-2 px-3 rounded-md bg-slate-400 placeholder:text-slate-500"
                           />
                           {isEdit ? ( <></> ) : ( 
                           <button
@@ -272,12 +272,12 @@ export function GenerateUser() {
                   select2="아이디"
                   select3="권한"
                 />
-                <Card className="grid row-start-2 col-start-2 h-2/3 px-4 py-4 gap-4 overflow-y-scroll snap-y h-1/2 bg-slate-100 border-0 shadow-none">
+                <Card className="grid row-start-2 col-start-2 h-2/3 px-4 py-4 gap-4 overflow-y-scroll snap-y h-1/2 bg-slate-100 border-0 shadow-none bg-inherit">
                   {userList.map((user, index) => (
-                    <Card key={index} className="h-full scroll-snap-item pt-6 hover:bg-slate-100 border shadow-md">
+                    <Card key={index} className="h-full scroll-snap-item pt-6 bg-[#262852] hover:bg-slate-400 border-0 shadow-md">
                       <CardContent className="gap-4 flex flex-row items-center justify-between">
-                        <div className='flex flex-col gap-2'>
-                          <p>이름: {user.name}</p>
+                        <div className='flex flex-col gap-2 text-white'>
+                          <p className=''>이름: {user.name}</p>
                           <p>ID: {user.userId}</p>
                           <p>권한: {user.role}</p>
                         </div>

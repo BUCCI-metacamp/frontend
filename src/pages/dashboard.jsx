@@ -23,12 +23,12 @@ export default function Dashboard() {
 
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-[#15103A]">
+    <div className="flex min-h-screen w-full flex-col bg-[#15103A]">
       <SideNav />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14  max-w-[1280px] ">
         <Header/>
         <main className="grid flex-1 items-start gap-4 sm:px-6 sm:py-0 md:gap-8">
-          <Card className="p-6 bg-inherit border-0">
+          <Card className="p-6 bg-inherit border-0 rounded-t-md">
             <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
               <div>
                 <TimeCard
@@ -45,14 +45,14 @@ export default function Dashboard() {
                 />
                 <Unit3DegreeChart 
                 data={sensorData}
-                />
+                />  
                 <Unit3ZChart 
                 data={sensorData}
                 />
               </div>
               <Tabs value={activeTab} onValueChange={setActiveTab}>
                 <div className="flex items-center">
-                  <TabsList className="bg-[#262852] border-0 focus:bg-[#262">
+                  <TabsList className="bg-[#262852] border-0 hover:bg-[##33366F]">
                     <TabsTrigger value="unit1">반출 공정</TabsTrigger>
                     <TabsTrigger value="unit2">가공 공정</TabsTrigger>
                     <TabsTrigger value="unit3">분류 공정</TabsTrigger>
