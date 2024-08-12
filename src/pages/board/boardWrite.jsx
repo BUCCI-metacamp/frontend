@@ -77,56 +77,56 @@ const BoardWrite = ({ isEdit }) => {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
+    <div className="flex min-h-screen w-full flex-col bg-[#15103A]">
       <SideNav />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 max-w-[1280px]">
         <Header />
         <div className="items-start sm:py-0 px-6">
           <h2 className="text-2xl text-red-400 font-bold mt-8">일지 작성</h2>
-          <Card className="mt-6 bg-slate-100">
+          <Card className="mt-6 bg-inherit border-0">
             <CardHeader>
-              <p className="font-bold text-lg">제목</p>
+              <p className="font-bold text-lg text-white">제목</p>
               <CardDescription>전달 사항 등이 있다면 기록해주세요.</CardDescription>
               <Input maxLength="100" onChange={(e) => setTitle(e.target.value)} />
             </CardHeader>
           </Card>
-          <Card className="mt-3 bg-slate-100">
+          <Card className="mt-3 bg-[#262852] border-0">
             <CardHeader>
-              <p className="text-lg font-bold ">생산 정보</p>
+              <p className="text-lg font-bold text-white">생산 정보</p>
               <div className="grid grid-rows-2 grid-cols-3 gap-4">
                 <div className="gap-4">
                   <p className="text-slate-500 font-semibold">시작 시간</p>
-                  <p className="text-sm italic">{productData?.startTime || ''}</p>
+                  <p className="text-sm italic text-white">{productData?.startTime || ''}</p>
                 </div>
                 <div>
                   <p className=" text-slate-500 font-semibold">가동 시간</p>
-                  <p className="text-sm italic">{productData?.uptime || ''}</p>
+                  <p className="text-sm italic text-white">{productData?.uptime || ''}</p>
                 </div>
                 <div>
                   <p className=" text-slate-500 font-semibold">최종 작업 시간</p>
-                  <p className="text-sm italic">{productData?.finalTime || ''}</p>
+                  <p className="text-sm italic text-white">{productData?.finalTime || ''}</p>
                 </div>
                 <div>
                   <p className=" text-slate-500 font-semibold">양품</p>
-                  <p className="text-sm italic">{productData?.good || ''}</p>
+                  <p className="text-sm italic text-white">{productData?.good || ''}</p>
                 </div>
                 <div>
                   <p className=" text-slate-500 font-semibold">불량</p>
-                  <p className="text-sm italic">{productData?.bad || 0}</p>
+                  <p className="text-sm italic text-white">{productData?.bad || 0}</p>
                 </div>
                 <div>
                   <p className=" text-slate-500 font-semibold">합계</p>
-                  <p className="text-sm italic">{productData?.total || ''}</p>
+                  <p className="text-sm italic text-white">{productData?.total || ''}</p>
                 </div>
               </div>
             </CardHeader>
           </Card>
-          <Card className="mt-3 bg-slate-100">
+          <Card className="mt-3 bg-[#262852] border-0">
             <CardHeader>
-              <p className="text-lg font-bold">내용</p>
+              <p className="text-lg font-bold text-white">내용</p>
               <CardDescription>생산량, 재고, 특이사항 등</CardDescription>
               <Textarea
-                className="h-56 fix"
+                className="h-56 fix bg-slate-400"
                 onChange={(e) => setContent(e.target.value)}
               ></Textarea>
             </CardHeader>

@@ -49,43 +49,43 @@ const handleCancelClick = (e) => {
   
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-slate-200">
+    <div className="flex min-h-screen w-full flex-col bg-[#15103A]">
       <SideNav/>
       <div className="flex flex-col sm:py-4 sm:pl-14 mx-12 max-w-[1280px]">
         <Header/>
         <div className="items-start px-6 sm:py-0">
           <h2 className='text-2xl text-red-400 font-bold mt-8'>일지</h2>
-          <Card className='bg-slate-100 mt-8'>
+          <Card className=' bg-inherit border-0 mt-8 text-white'>
             <div className="p-4 border-b-2">
               <p className="font-medium text-3xl">{post.title}</p>
               <p className="text-md italic mt-2">작성자: {post.author.name}</p>
             </div>
           {post.startTime && (
-            <Card className="p-4 m-4">
+            <Card className="p-4 m-4 bg-[#262852] border-0" >
               <div className="grid grid-rows-2 grid-cols-3 gap-4">
                 <div className="gap-4">
                   <p className="text-slate-500 font-semibold">시작 시간</p>
-                  <p className="text-sm italic">{post.startTime}</p>
+                  <p className="text-sm italic text-white">{post.startTime}</p>
                 </div>
                 <div>
                   <p className=" text-slate-500 font-semibold">가동 시간</p>
-                  <p className="text-sm italic">{post.uptime}</p>
+                  <p className="text-sm italic text-white">{post.uptime}</p>
                 </div>
                 <div>
                   <p className=" text-slate-500 font-semibold">최종 작업 시간</p>
-                  <p className="text-sm italic">{post.finalTime}</p>
+                  <p className="text-sm italic text-white">{post.finalTime}</p>
                 </div>
                 <div>
                   <p className=" text-slate-500 font-semibold">양품</p>
-                  <p className="text-sm italic">{post.good || 0}</p>
+                  <p className="text-sm italic text-white">{post.good || 0}</p>
                 </div>
                 <div>
                   <p className=" text-slate-500 font-semibold">불량</p>
-                  <p className="text-sm italic">{post.bad || 0}</p>
+                  <p className="text-sm italic text-white">{post.bad || 0}</p>
                 </div>
                 <div>
                   <p className=" text-slate-500 font-semibold">합계</p>
-                  <p className="text-sm italic">{post.good || 0 + post.bad || 0}</p>
+                  <p className="text-sm italic text-white">{post.good || 0 + post.bad || 0}</p>
                 </div>
               </div>
             </Card>
@@ -93,7 +93,7 @@ const handleCancelClick = (e) => {
 
             <div className="p-4 border-t-2">
               <p className="font-bold text-lg mb-2">내용</p>
-              <Card className='h-max min-h-56 p-4'>{post.content}</Card>
+              <Card className='h-max min-h-56 p-4 bg-slate-400 border-0'>{post.content}</Card>
             </div>
           </Card>
           <div className="flex flex-row justify-end py-6 gap-8">
